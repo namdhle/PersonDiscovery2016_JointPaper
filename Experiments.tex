@@ -15,6 +15,73 @@ Average precision $\text{AP}(q)$ is then computed classically based on the list 
 
 \subsection{Results}
 
+\subsubsection{Face}
+
+\begin{table}[tb]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\cline{3-5}
+ \multicolumn{2}{c|}{ }	& MAP@1  & MAP@10 & MAP@100  \\ \hline
+ \multirow{2}{*}{Clus.} & S1	& 65.8   & 46.0   & 45.0 \\ \cline{2-5}
+ 						& S2  	& 62.3   & 50.3   & 49.2 \\ \hline
+
+ \multirow{2}{*}{Verf.} & S1	& 00.0   & 00.0   & 00.0 \\ \cline{2-5}
+ 						& S2 	& 00.0   & 00.0   & 00.0 \\ \hline
+
+ \multirow{2}{*}{Grap.} & RW 	& 69.3   & 53.8   & 52.1 \\ \cline{2-5}
+ 						& MST 	& 70.5   & 56.0   & 54.3 \\ \hline 										
+\end{tabular}
+\vspace*{-2mm}
+\caption{Results of systems using only visual modality.}
+\vspace*{-2mm}
+\label{tab:face_result}
+\end{table}
+
+\subsubsection{Speech}
+
+\begin{table}[tb]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\cline{3-5}
+ \multicolumn{2}{c|}{ }	& MAP@1  & MAP@10 & MAP@100  \\ \hline
+ \multirow{1}{*}{Clus.} & S1	& 29.9   & 26.2   & 25.2 \\ \cline{1-5}
+
+ \multirow{2}{*}{Verf.} & S1	& 00.0   & 00.0   & 00.0 \\ \cline{2-5}
+ 						& S2 	& 00.0   & 00.0   & 00.0 \\ \hline
+
+ \multirow{2}{*}{Grap.} & RW 	& 67.3 	 &  51.6  & 50.1 \\ \cline{2-5}
+ 						& MST 	& 62.9   &  50.1  & 48.6 \\ \hline 								
+\end{tabular}
+\vspace*{-2mm}
+\caption{Results of systems using only speech modality.}
+\vspace*{-2mm}
+\label{tab:speech_result}
+\end{table}
+
+\subsubsection{Audiovisual}
+
+\begin{table}[tb]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\cline{3-5}
+ \multicolumn{2}{c|}{ }	& MAP@1  & MAP@10 & MAP@100  \\ \hline
+ \multirow{1}{*}{Clus.} & S1	& 73.6   & 59.8   & 57.9 \\ \cline{2-5}
+ 						& S2 	& 00.0   & 00.0   & 00.0 \\ \hline
+ 						
+ \multirow{1}{*}{Verf.} & S1	& 00.0   & 00.0   & 00.0 \\ \cline{2-5}
+ 						& S2 	& 00.0   & 00.0   & 00.0 \\ \hline
+
+ \multirow{2}{*}{Grap.} & RW 	& 71.3   &  57.4  & 55.5 \\ \cline{2-5}
+ 						& MST 	& 68.9   &  55.4 & 53.6 \\ \hline 								
+\end{tabular}
+\vspace*{-2mm}
+\caption{Results of audiovisual systems systems.}
+\vspace*{-2mm}
+\label{tab:av_result}
+\end{table}
+
+\subsubsection{Discussion}
+
 \begin{compactitem}
   \item Sub. (2) used LIUM speaker diarization with our OCR-NER.
   \item Sub. (2) used OpenFace for face naming without talking score with our OCR-NER.

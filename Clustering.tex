@@ -38,6 +38,22 @@ This clustering method is fully described in~\cite{rouvier12-2} and~\cite{dupuy2
 
 \subsection{Name assignment}
 
-Baseline from~\cite{poignant2012fusion}.
+After obtaining homogeneous clusters during which distinct identities speak or appear, one needs to assign each name output from NER module to the correct clusters. 
+%
+%However, associating auditory voices with visual person clusters or names has two major difficulties. 
+%The visible person may not be the current speaker and the speaking person can be dubbed by a narrator in a different language.
+%
+%Because of these problems of AV association, 
+We use a direct naming method~\cite{poignant2012fusion} which finds the mapping between clusters and names to maximize the co-occurrences between them.
+%
+Names are propagated based on the outputs of face diarization and speaker diarization independently. 
+%
+%The direct naming method is applied to speaker clusters to produce a mapping between names and clusters. All shots which overlap with the clusters are tagged with the corresponding names with equal confident scores. 
+%
+%The same direct method is applied to face clusters to produce a set of named clusters.
+%Unlike speaker naming, for  one shot, 
+A name coming from face naming is ranked based on the talking score of the cluster's segment within that shot.
+%
+The talking score is predicted using lip motion and temporal modeling with LSTM~\cite{Le_ACMMM_2016}.
 
 \endinput

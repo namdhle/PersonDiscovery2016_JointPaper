@@ -5,7 +5,40 @@ TBA
 
 \subsection{Late fusion ranking}
 
-Union of results (Eumssi, UPC)
+Let $S = \{s_k\}$ be the list of testing shots. Within each shot, $\{N^F_i, t(N^F_i)\}$ is the set of names returned by face naming and the corresponding talking scores and $\{N^A_i, 1.0\}$  is the set of names returned by speaker naming, each is ranked equally with score 1.0.
+%
+The names which the two methods agree on are ranked highest. 
+%
+Then, names from face naming are ranked higher than speaker naming  because we found that face naming is more reliable in empirical experiments.
+%
+Alternative strategies that rank speaker naming equal or higher than face naming gave inferior results.
+%
+Our ranking strategy is described in Algo. \ref{algo:ranking}. 
+
+\begin{algorithm}
+  \caption{Ranking names within shots
+    \label{algo:ranking}}
+  \begin{algorithmic}[1]
+	  \For{$s_k \in S$}
+ 	  	    \State{$Q_{s_k} = \emptyset$}
+		    \State{Face\_naming$(s_k) \Rightarrow (N^F_i, t(N^F_i))$}
+				\State{Speaker\_naming$(s_k) \Rightarrow (N^A_j, 1.0)$}
+				\For{each $N^F_i$}
+					\If{$\exists N^A_j / N^A_j = N^F_i$}
+						\State{$Q_{s_k} = Q_{s_k} \cup \{(N^F_i, t(N^F_i) + 2.0)\}$}
+					\Else
+						\State{$Q_{s_k} = Q_{s_k} \cup \{(N^F_i, t(N^F_i) + 1.0)\}$}
+					\EndIf
+				\EndFor
+				\For{each $N^A_j$}
+					\If{not $\exists N^F_i / N^F_i = N^A_j$}
+						\State{$Q_{s_k} = Q_{s_k} \cup \{(N^A_j, 1.0)\}$}
+					\EndIf
+				\EndFor
+		\EndFor
+  \end{algorithmic}
+\end{algorithm}
+%
 
 \subsection{Audiovisual Similarity}
 

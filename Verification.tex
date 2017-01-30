@@ -14,19 +14,25 @@ are described below.
 
 \subsubsection{GTM-UVigo system}
 First, audio and video features were extracted from the recordings. The audio features were 19 MFCCs plus delta, acceleration and energy. For the video features, first
-the baseline face tracking approach was used to detect faces, and then discrete cosine transform (DCT) features \cite{mccool2009} were extracted using blocks of size 12
-with 50\% overlap and 45 DCT comonents using the Bob toolkit \cite{bob2012}, preceeded by geometric normalization and photometric enhancement using the Tan\&Triggs algorithm
-\cite{tan2010}.
+the baseline face tracking approach was used to detect faces, and then discrete cosine transform (DCT) features \cite{mccool2009} were extracted and normalized with Bob toolkit \cite{bob2012}.
+%using blocks of size 12
+%with 50\% overlap and 45 DCT comonents using the Bob toolkit \cite{bob2012}, preceeded by %geometric normalization and photometric enhancement using the Tan\&Triggs algorithm
+%\cite{tan2010}.
 
 For each person name detected by the OCR, the intervals of voice activity detection and appearance of that person were extracted. For the audio, 
 the time interval $(t_{\mathrm{start}},t_{\mathrm{end}})$ in which the name of the speaker $spk$ appears is taken as a starting point. A strategy to enlarge this time
- interval in order to obtain more data to enrol the speaker is applied: given the time intervals $S_{\mathrm{left}} = (t_{\mathrm{start}}-10,t_{\mathrm{end}})$ and 
- $S_{\mathrm{right}} = (t_{\mathrm{start}},t_{\mathrm{end}}+10)$, a change point is searched within each of these intervals using the Bayesian information criterion algorithm
- (BIC) for speaker segmentation,  having the restriction that the change point has to be in the 
- intervals $(t_{\mathrm{start}}-10,t_{\mathrm{start}})$ and $(t_{\mathrm{end}},t_{\mathrm{end}}+10)$, respectively. If no change point was found within the interval
- $S_{\mathrm{left}}$ then $t_{\mathrm{left}}$ is set to $t_{\mathrm{start}}-10$ and, similarly, if no change point was found within the interval 
- $S_{\mathrm{right}}$ then $t_{\mathrm{right}}$ is set to $t_{\mathrm{end}}+10$. Then, speaker $spk$ is assumed to be speaking in the interval 
- $S_{\mathrm{spk}} = (t_{\mathrm{left}},t_{\mathrm{right}})$. For the video, the faces detected by the face tracker in the interval $(t_{\mathrm{start}},t_{\mathrm{end}})$ in 
+ interval in order to obtain more data to enrol the speaker is applied: the boundaries $(t_{\mathrm{start}},t_{\mathrm{end}})$ are iteratively extended $10ms$ to each direction until a change point is detected using the Bayesian information criterion algorithm
+ (BIC) for speaker segmentation
+%
+% given the time intervals $S_{\mathrm{left}} = (t_{\mathrm{start}}-10,t_{\mathrm{end}})$ and 
+% $S_{\mathrm{right}} = (t_{\mathrm{start}},t_{\mathrm{end}}+10)$, a change point is searched within each of these intervals using the Bayesian information criterion algorithm
+% (BIC) for speaker segmentation,  having the restriction that the change point has to be in the 
+% intervals $(t_{\mathrm{start}}-10,t_{\mathrm{start}})$ and $(t_{\mathrm{end}},t_{\mathrm{end}}+10)$, respectively. If no change point was found within the interval
+% $S_{\mathrm{left}}$ then $t_{\mathrm{left}}$ is set to $t_{\mathrm{start}}-10$ and, similarly, if no change point was found within the interval 
+% $S_{\mathrm{right}}$ then $t_{\mathrm{right}}$ is set to $t_{\mathrm{end}}+10$. Then, speaker $spk$ is assumed to be speaking in the interval 
+% $S_{\mathrm{spk}} = (t_{\mathrm{left}},t_{\mathrm{right}})$. 
+% 
+For the video, the faces detected by the face tracker in the interval $(t_{\mathrm{start}},t_{\mathrm{end}})$ in 
  which the name of the speaker $spk$ appears were considered; given that only one face was detected, the whole presence interval of that face is taken but, in case more than 
  one face was detected, the one that appeared in more frames was assigned to the speaker, assuming that was the dominant face in the given time interval.
  In case the person appears several times in the OCR output, a segment is computed for each occurrence.

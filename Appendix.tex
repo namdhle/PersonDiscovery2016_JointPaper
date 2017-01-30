@@ -1,0 +1,97 @@
+\section{Appendix}
+
+\subsection{GTM-UVigo system}
+
+OCR-NER ==> Init models ==> Verification
+
+\begin{table}[tb]
+\centering
+\begin{tabular}{c|c|c|c|}
+\cline{2-4}
+                                & MAP@1  & MAP@10 & MAP@100  \\ \hline
+ \multicolumn{1}{|c|}{Audio} &  44.1  & 36.9   & 35.9 \\ \hline
+ \multicolumn{1}{|c|}{Video} &  40.9  & 37.1   & 35.7 \\ \hline
+ \multicolumn{1}{|c|}{Audio+video} & 45.6 & 38.4 & 37.0\\ \hline
+ 
+\end{tabular}
+\vspace*{-2mm}
+\caption{GTM-UVigo results using audio, video and multimodal approaches.}
+\vspace*{-2mm}
+\label{tab:uvigo}
+\end{table}
+
+\subsection{EUMSSI}
+%BEGINNING results EUMSSI ---------------------------------------------------
+
+\begin{compactitem}
+  \item Sub. (1) used LIUM speaker diarization with our OCR-NER.
+  \item Sub. (2) used FaceNet for face naming
+	\item Sub. (3) used FaceNet + our LSTM.
+	\item Sub. (4) = sub (3) union with sub (1).
+	
+	\item Sub. (5) is our face naming.
+	\item Sub. (6) is our face naming + LSTM
+	\item Sub. (7) = sub (6) + sub (1)
+\end{compactitem}
+
+\begin{table}[tb]
+\centering
+\begin{tabular}{c|c|c|c|}
+\cline{2-4}
+                                & MAP@1  & MAP@10 & MAP@100  \\ \hline
+ \multicolumn{1}{|c|}{Sub. (1)} & 29.9   & 26.2   & 25.2 \\ \hline \hline
+ \multicolumn{1}{|c|}{(2) FaceNet} & 65.8   & 46.0   & 45.0 \\ \hline
+ \multicolumn{1}{|c|}{(3) FaceNet + LSTM} & 66.3   & 46.3   & 45.4 \\ \hline
+ \multicolumn{1}{|c|}{(4) Union} & 67.8   & 47.4   & 46.4 \\ \hline
+ \hline
+ \multicolumn{1}{|c|}{Sub. (5)} & 62.3   & 50.3   & 49.2 \\ \hline
+ \multicolumn{1}{|c|}{Sub. (6)} & 69.3   & 57.0   & 55.8 \\ \hline
+ \multicolumn{1}{|c|}{Sub. (7)} & 73.6   & 59.8   & 57.9 \\ \hline
+
+\end{tabular}
+\vspace*{-2mm}
+\caption{Benchmarking results of our submissions. Details of each submission in the text.}
+\vspace*{-2mm}
+\label{tab:mediaeval}
+\end{table}
+%END results EUMSSI ---------------------------------------------------
+
+\subsection{MOTIF}
+%BEGINNING results MOTIF (IRISA/PUCMINAS)---------------------------------------------------
+
+Table \ref{tab:MOTIF_perfs} gathers the performances obtained by the team MOTIF (IRISA - PUC Minas) on the test set with the systems submitted at MPD 2016\footnote{Only adjustements rely on the use of features related to OCR/NER, OpenFace vectors and audio similarities to fit the data used in this paper.}:
+\begin{itemize}
+  \item 'no prop.' (sub 5 /contrastive 4 in MPD) bypasses the tag-propagation step
+  \item 'RW (AV)' (sub 2/contrastive 1 in MPD) implements the Random Walk approach for tag propagation using audiovisual similarities
+  \item 'MST (AV)' (sub 1/primary and sub 4/contrastive 3 in MPD) implements the Minimum Spanning Tree approach for tag propagation using audiovisual similarities
+  \item 'RW (A)' and  'RW (V)' implement the Random Walk approach for tag propagation using a single modality: audio (A) and video (V) respectively.
+  \item 'MST (A)' and  'MST (V)' implement the Minimum Spanning Tree approach for tag propagation a single modality : audio (A) and video (V) respectively ('MST (V)' is comparable to sub3/contrastive 2 in MPD).
+\end{itemize}
+
+\begin{table}[!t]
+\caption{MOTIF systems: Mean Average Precisions @K obtained on the 2016 test set.}
+
+\label{tab:MOTIF_perfs}
+\centering
+\begin{tabular}{|c||c|c|c|c|}
+\hline
+           & MAP@1& MAP@10& MAP@100  \\ \hline
+\hline
+\hline
+no prop.   & 55.9 &  33.8 & 32.8\\ \hline
+\hline
+RW (AV)    & 71.3 &  57.4 & 55.5\\ \hline
+MST (AV)   & 68.9 &  55.4 & 53.6\\ \hline
+\hline
+RW (A)     & 67.3 &  51.6 & 50.1\\ \hline
+MST (A)    & 62.9 &  50.1 & 48.6 \\ \hline
+\hline
+RW (V)     & 69.3  & 53.8 & 52.1 \\ \hline
+MST (V)    & 70.5  & 56.0 & 54.3 \\ \hline
+
+
+\end{tabular}
+\end{table}
+%END results MOTIF (IRISA/PUCMINAS)---------------------------------------------------
+
+\endinput

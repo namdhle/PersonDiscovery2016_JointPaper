@@ -40,6 +40,10 @@ Our ranking strategy is described in Algo. \ref{algo:ranking}.
 \end{algorithm}
 %
 
+\subsection{UPC Late fusion ranking}
+
+The multimodal tracking system is implemented as fusion of different modalities. Speaker and Face Traking system outputs are merged using two different methods. The first method was the intersection of the shots of both tracking systems, averaging the confidence of the intersected shots. In the second method, the union strategy  was implemented relying on the intersected shots of both modalities and reducing the confidence of those not intersected.
+
 \subsection{Audiovisual Similarity}
 
 The graph-based approach by the MOTIF team is extended to multimodality by using a linear combination of the audio and visual similarities defined in section \ref{ssec:graph_gen}: $\sigma^{AV}_{ij} = \beta \sigma^V_{ij} + (1-\beta) \sigma^A_{ij}$. $\beta$ is set experimentally to 0.5.

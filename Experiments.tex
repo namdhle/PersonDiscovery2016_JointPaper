@@ -3,89 +3,83 @@
 %
 \subsection{Datasets and Metric}
 
-The 2015 test corpus serves as development set for this year's task. It contains 106 hours of video, corresponding to 172 editions of evening broadcast news \emph{``Le 20 heures''} of the French public channel \emph{``France 2''}, from January 1st 2007 to June 30st 2007. This development set is associated with \emph{a posteriori} annotations based on last year participants' submissions.
+The test set is divided into three datasets: INA, DW and 3-24. The INA dataset contains a full week of broadcast for 2 TV channels for a total duration of 90 hours in French. The DW dataset~\cite{EUMSSI} is composed of video downloaded from Deutsche Welle website, in English and German for a total duration of 50 hours. The last dataset contains 13 hours of broadcast from 3/24 Catalan TV news channel. Each shot has been tagged with the names of people who appear and speak within that shot.
 
-The test set is divided into three datasets: INA, DW and 3-24. The INA dataset contains a full week of broadcast for 3 TV channels and 3 radio channels in French. Only a subset (made of 2 TV video channels for a total duration of 90 hours) needs to be processed. However, participants can process the rest of it if they think it might lead to improved results. Moreover, this dataset is associated with manual metadata provided by INA in the shape of CSV files. The DW dataset~\cite{EUMSSI} is composed of video downloaded from Deutsche Welle website, in English and German for a total duration of 50 hours. This dataset is also associated with metadata that can be used in contrastive runs. The last dataset contains 13 hours of broadcast from 3/24 Catalan TV news channel.
-
-As the test set comes completely free of any annotation, it will be annotated \emph{a posteriori} based on participants' submissions.
-In order to ease this annotation process, participants are asked to justify their assertion. To this end, each hypothesized name $n \in \hypNames$ has to be backed up by a carefully selected and unique shot prooving that the person actually holds this name $n$: we call this an evidence. In real-world conditions, this evidence would help a human annotator double-check the automatically-generated index, even for people they did not know beforehand.
-
-Two types of evidence are allowed: an \emph{image} evidence is a time in a video when a person is visible, while his/her name is written on screen; an \emph{audio} evidence is the time when the name of a person is pronounced, provided that this person is visible in a $[\text{time} - 5s, \text{time} + 5s ]$ neighborhood.
-For instance, in Figure~\ref{fig:evidence}, shot \#1 contains an \emph{image} evidence for Mr A (because his name and his face are visible simultaneously on screen) while shot \#3 contains an \emph{audio} evidence for Mrs B (because her name is pronounced less than 5 seconds before or after her face is visible on screen).
-
-Because of limited resources dedicated to collaborative annotation, the test set cannot be fully annotated. Therefore, the task is evaluated indirectly as an information retrieval task, using the folllowing principle.
-
+The task is evaluated indirectly as an information retrieval task, using the folllowing principle.
+%
 For each query $q \in \queries \subset \refNames$ (\texttt{first\-name\_lastname}), returned shots are first sorted by the edit distance between the hypothesized person name and the query $q$ and then by confidence scores.
 Average precision $\text{AP}(q)$ is then computed classically based on the list of relevant shots (according to the groundtruth) and the sorted list of shots. Finally, Mean Average Precision is computed as follows:
 \begin{align}
             \text{MAP} & = \frac{1}{|\queries|} \sum_{q \in \queries} \text{AP}(q) \nonumber
 \end{align}
 
-\subsection{Evaluation}
+\subsection{Results}
 
-\begin{compactitem}
-  \item Sub. (2) used LIUM speaker diarization with our OCR-NER.
-  \item Sub. (2) used OpenFace for face naming without talking score with our OCR-NER.
-	\item Sub. (3) used our face naming without talking score with our OCR-NER.
-	\item Sub. (4) used our face naming with talking score. 
-	\item Sub. (5) used the combination of talking face naming in sub. (3) with speaker naming.
-\end{compactitem}
+\subsubsection{Face}
 
 \begin{table}[tb]
 \centering
-\begin{tabular}{c|c|c|c|}
-\cline{2-4}
-                                & MAP@1  & MAP@10 & MAP@100  \\ \hline
- \multicolumn{1}{|c|}{Sub. (1)} & 29.9   & 26.2   & 25.2 \\ \hline
- \multicolumn{1}{|c|}{Sub. (2)} & 65.8   & 46.0   & 45.0 \\ \hline
- \multicolumn{1}{|c|}{Sub. (3)} & 62.3   & 50.3   & 49.2 \\ \hline
- \multicolumn{1}{|c|}{Sub. (4)} & 69.3   & 57.0   & 55.8 \\ \hline
- \multicolumn{1}{|c|}{Sub. (5)} & 73.6   & 59.8   & 57.9 \\ \hline
+\begin{tabular}{|c|c|c|c|c|}
+\cline{3-5}
+ \multicolumn{2}{c|}{ }	& MAP@1  & MAP@10 & MAP@100  \\ \hline
+ \multirow{2}{*}{Clus.} & S1	& 66.3   & 46.3   & 45.4 \\ \cline{2-5}
+ 						& S2  	& 69.3   & 57.0   & 55.8 \\ \hline
 
+ \multirow{2}{*}{Verf.} & S1	& 40.9   & 37.1   & 35.7 \\ \cline{2-5}
+ 						& S2 	& 00.0   & 00.0   & 00.0 \\ \hline
+
+ \multirow{2}{*}{Grap.} & RW 	& 69.3   & 53.8   & 52.1 \\ \cline{2-5}
+ 						& MST 	& 70.5   & 56.0   & 54.3 \\ \hline 										
 \end{tabular}
 \vspace*{-2mm}
-\caption{Benchmarking results of our submissions. Details of each submission in the text.}
+\caption{Results of systems using only visual modality.}
 \vspace*{-2mm}
-\label{tab:mediaeval}
+\label{tab:face_result}
 \end{table}
 
+\subsubsection{Speech}
 
-%BEGINNING results IRISA/PUCMINAS---------------------------------------------------
-\begin{table}[!t]
-\caption{Mean average precisions @K obtained on the development and test sets using approaches by IRISA - PUC Minas. {\it no prop.}: no tag propagation. MST: tag propagation using the Minimum-Spanning Tree approach. RW: tag propagation using the Random Walk approach.}
-\label{table_example}
+\begin{table}[tb]
 \centering
-\begin{tabular}{|c||c|c|c|c|}
-% results on the development set
-\multicolumn{5}{ c }{Dev16}\\
-\hline
- & \multicolumn{4}{| c |}{MAP@K (\%)}\\
-\hline
-K  & 1 & 5 & 10 & 100\\
-\hline
-\hline
-no prop.  & 81.4 & 66.3 & 64.2 & 61.8\\
-\hline
-MST & 81.4 & 71.1 & 69.5 & 67.1\\
-\hline
-RW & 81.4 & 71.2 & 69.7 & 67.1\\
-\hline
-% results on the test set
-\multicolumn{5}{ c }{Test16}\\
-\hline
- & \multicolumn{4}{| c |}{MAP@K (\%)}\\
-\hline
-K  & 1 & 5 & 10& 100\\
-\hline
-\hline
-no prop. & 50.8 & 33.0 & 31.4 & 30.5\\
-\hline
-MST & 63.3 & 53.2 & 51.3 & 49.8\\
-\hline
-RW & 65.4 & 55.2 & 53.2 & 51.7\\
-\hline
+\begin{tabular}{|c|c|c|c|c|}
+\cline{3-5}
+ \multicolumn{2}{c|}{ }	& MAP@1 & MAP@10 & MAP@100  \\ \hline
+ \multirow{1}{*}{Clus.} & LIUM	& 29.9   & 26.2   & 25.2 \\ \cline{1-5}
+
+ \multirow{2}{*}{Verf.} & S1	& 44.1   & 36.9   & 35.9 \\ \cline{2-5}
+ 						& S2 	& 00.0   & 00.0   & 00.0 \\ \hline
+
+ \multirow{2}{*}{Grap.} & RW 	& 67.3 	 &  51.6  & 50.1 \\ \cline{2-5}
+ 						& MST 	& 62.9   &  50.1  & 48.6 \\ \hline 								
 \end{tabular}
+\vspace*{-2mm}
+\caption{Results of systems using only speech modality.}
+\vspace*{-2mm}
+\label{tab:speech_result}
 \end{table}
-%END results IRISA/PUCMINAS---------------------------------------------------
+
+\subsubsection{Audiovisual}
+
+\begin{table}[tb]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\cline{3-5}
+ \multicolumn{2}{c|}{ }	& MAP@1 & MAP@10 & MAP@100  \\ \hline
+ \multirow{1}{*}{Clus.} & S1	& 67.8   & 47.4   & 46.4 \\ \cline{2-5}
+ 						& S2 	& 73.6   & 59.8   & 57.9 \\ \hline
+ 						
+ \multirow{1}{*}{Verf.} & S1	& 45.6   & 38.4   & 37.0\\ \cline{2-5}
+ 						& S2 	& 00.0   & 00.0   & 00.0 \\ \hline
+
+ \multirow{2}{*}{Grap.} & RW 	& 71.3   &  57.4  & 55.5 \\ \cline{2-5}
+ 						& MST 	& 68.9   &  55.4  & 53.6 \\ \hline 								
+\end{tabular}
+\vspace*{-2mm}
+\caption{Results of audiovisual systems systems.}
+\vspace*{-2mm}
+\label{tab:av_result}
+\end{table}
+
+\subsubsection{Discussion}
 
 \endinput

@@ -1,0 +1,56 @@
+\section{Name initialization and verification}
+\label{sec:verification}
+
+
+The proposed system can be divided in an enrolment and a search stage. For each person name detected by optical character recognition (OCR), the most likely interval
+of speech and face presence are detected and used for enrolment.
+%, as depicted in Figure \ref{fig:timeline}. 
+Once the detected people are enrolled, speaker and face recognition
+are performed for each shot in order to assign labels to that shot. 
+A decision fusion strategy is implemented in order to combine the speech and video labels. The details of the system
+are described below.
+
+\subsection{Enrollment}
+
+\subsubsection{GTM-UVigo system}
+First, audio and video features were extracted from the recordings. The audio features were 19 MFCCs plus delta, acceleration and energy. For the video features, first
+the baseline face tracking approach was used to detect faces, and then discrete cosine transform (DCT) features \cite{mccool2009} were extracted and normalized with Bob toolkit \cite{bob2012}.
+%using blocks of size 12
+%with 50\% overlap and 45 DCT comonents using the Bob toolkit \cite{bob2012}, preceeded by %geometric normalization and photometric enhancement using the Tan\&Triggs algorithm
+%\cite{tan2010}.
+
+For each person name detected by the OCR, the intervals of voice activity detection and appearance of that person were extracted. For the audio, 
+the time interval $(t_{\mathrm{start}},t_{\mathrm{end}})$ in which the name of the speaker $spk$ appears is taken as a starting point. A strategy to enlarge this time
+ interval in order to obtain more data to enrol the speaker is applied: the boundaries $(t_{\mathrm{start}},t_{\mathrm{end}})$ are iteratively extended $10ms$ to each direction until a change point is detected using the Bayesian information criterion algorithm
+ (BIC) for speaker segmentation
+%
+% given the time intervals $S_{\mathrm{left}} = (t_{\mathrm{start}}-10,t_{\mathrm{end}})$ and 
+% $S_{\mathrm{right}} = (t_{\mathrm{start}},t_{\mathrm{end}}+10)$, a change point is searched within each of these intervals using the Bayesian information criterion algorithm
+% (BIC) for speaker segmentation,  having the restriction that the change point has to be in the 
+% intervals $(t_{\mathrm{start}}-10,t_{\mathrm{start}})$ and $(t_{\mathrm{end}},t_{\mathrm{end}}+10)$, respectively. If no change point was found within the interval
+% $S_{\mathrm{left}}$ then $t_{\mathrm{left}}$ is set to $t_{\mathrm{start}}-10$ and, similarly, if no change point was found within the interval 
+% $S_{\mathrm{right}}$ then $t_{\mathrm{right}}$ is set to $t_{\mathrm{end}}+10$. Then, speaker $spk$ is assumed to be speaking in the interval 
+% $S_{\mathrm{spk}} = (t_{\mathrm{left}},t_{\mathrm{right}})$. 
+% 
+For the video, the faces detected by the face tracker in the interval $(t_{\mathrm{start}},t_{\mathrm{end}})$ in 
+ which the name of the speaker $spk$ appears were considered; given that only one face was detected, the whole presence interval of that face is taken but, in case more than 
+ one face was detected, the one that appeared in more frames was assigned to the speaker, assuming that was the dominant face in the given time interval.
+ In case the person appears several times in the OCR output, a segment is computed for each occurrence.
+ 
+ Finally, once the intervals of appearance are defined, an i-vector \cite{dehak10} is extracted for each modality using Kaldi toolkit \cite{kaldi}; in the case of speech, speech activity detection (SAD) was performed
+ beforehand, in order to remove the non-speech intervals. In case several segments were available for a person name, their features were concatenated and all the segments
+ were treated as a single one.
+
+\subsection{Search}
+
+\subsubsection{GTM-UVigo system}
+
+In order to decide which speaker was present in a shot, first speech and face detection were performed. Speech detection was carried out using a logistic regression approach
+used to classify a segment as speech or non-speech, discarding the non-speech segments. For the video, the faces detected by the face tracker within the shot were identified, 
+and the one that appeared in more frames (if any) was chosen. Afther that, the same procedure as in the enrollment stage was performed: features were extracted from the shot
+and an i-vector was extracted for each modality (in the case of speech, this was preceeded by speech activity detection). Once the i-vectors of the shot were obtained,
+cosine scoring with the enrollment i-vectors was computed, choosing the person names that achieved the highest score for each modality. The shot was assigned to
+a person if the name assigned by the face and
+speech modalities were equal and the sum of their scores were greater than a threshold.
+
+\endinput

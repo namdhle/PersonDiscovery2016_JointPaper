@@ -2,8 +2,8 @@
 \label{sec:verification}
 
 
-The proposed system can be divided in an enrolment and a search stage. For each person name detected by optical character recognition (OCR), the most likely interval
-of speech and face presence are detected and used for enrolment.
+The proposed system can be divided in an enrollment and a search stage. For each person name detected by optical character recognition (OCR), the most likely interval
+of speech and face presence are detected and used for enrollment.
 %, as depicted in Figure \ref{fig:timeline}. 
 Once the detected people are enrolled, speaker and face recognition
 are performed for each shot in order to assign labels to that shot. 
@@ -21,7 +21,7 @@ the baseline face tracking approach was used to detect faces, and then discrete 
 
 For each person name detected by the OCR, the intervals of voice activity detection and appearance of that person were extracted. For the audio, 
 the time interval $(t_{\mathrm{start}},t_{\mathrm{end}})$ in which the name of the speaker $spk$ appears is taken as a starting point. A strategy to enlarge this time
- interval in order to obtain more data to enrol the speaker is applied: the boundaries $(t_{\mathrm{start}},t_{\mathrm{end}})$ are iteratively extended $10ms$ to each direction until a change point is detected using the Bayesian information criterion algorithm
+ interval in order to obtain more data to enroll the speaker is applied: the boundaries $(t_{\mathrm{start}},t_{\mathrm{end}})$ are iteratively extended $10ms$ to each direction until a change point is detected using the Bayesian information criterion algorithm
  (BIC) for speaker segmentation
 %
 % given the time intervals $S_{\mathrm{left}} = (t_{\mathrm{start}}-10,t_{\mathrm{end}})$ and 

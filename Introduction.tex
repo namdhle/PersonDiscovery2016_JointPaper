@@ -57,4 +57,18 @@ Average precision $\text{AP}(q)$ is then computed classically based on the list 
 
 \subsection{Overview of our approaches}
 
+Basic of all approaches: people with similar faces and voices should have the same name. finding name candidates, propagates the names to similar appearances. Choke points: finding names, face / speech similarities, propagate names. Depends on how to deal with these choke points --> different approaches:
+
+\mypartitle{Clustering-based naming.} 
+Most common baseline. Face/speech tracks are first aggregated into homogeneous clusters according to person identities. Then each clusters is tagged with the most probable person name.
+
+\mypartitle{Verification-based name propagation.} 
+Clustering has 1 big disadvantage is relies on clustering. Error cannot be recovered. Higher priority on names, build discriminative models.
+Verification.
+A person name is first assigned to the most probable face/speech track. The name is then propagated to all face/speech tracks which are verified to have the same identity.
+
+\mypartitle{Graph-based name propagation.} Another method to get around clustering. Verification is one-one, clustering is global. Graphbased more hybrid to make use of both.
+A graph is built with a face/speech track as a node and weight of edges is the similarity. Some nodes are initially tagged with the names. Names are then propagated along the edges within the graph.
+
+Clustering depends on models, verification and graphbased needs good names. Has different pros and cons, benchmarking to find best answers.
 \endinput

@@ -1,17 +1,5 @@
 \section{Experiments}
 \label{sec:experiment}
-%
-\subsection{Datasets and Metric}
-
-The test set is divided into three datasets: INA, DW and 3-24. The INA dataset contains a full week of broadcast for 2 TV channels for a total duration of 90 hours in French. The DW dataset~\cite{EUMSSI} is composed of video downloaded from Deutsche Welle website, in English and German for a total duration of 50 hours. The last dataset contains 13 hours of broadcast from 3/24 Catalan TV news channel. Each shot has been tagged with the names of people who appear and speak within that shot.
-
-The task is evaluated indirectly as an information retrieval task, using the folllowing principle.
-%
-For each query $q \in \queries \subset \refNames$ (\texttt{first\-name\_lastname}), returned shots are first sorted by the edit distance between the hypothesized person name and the query $q$ and then by confidence scores.
-Average precision $\text{AP}(q)$ is then computed classically based on the list of relevant shots (according to the groundtruth) and the sorted list of shots. Finally, Mean Average Precision is computed as follows:
-\begin{align}
-            \text{MAP} & = \frac{1}{|\queries|} \sum_{q \in \queries} \text{AP}(q) \nonumber
-\end{align}
 
 \subsection{Results}
 

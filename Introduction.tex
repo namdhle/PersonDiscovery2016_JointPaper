@@ -28,4 +28,33 @@ To emphasize on the unsupervised nature of real world applications, we applied t
 %
 The benchmarking results allow us to thoroughly analyse all 3 approaches to understand their pros and cons. Thus, we can draw meaningful lessons for good practice in large-scale person discovery in broadcast news.
 
+\subsection{MediaEval Person Discovery challenge}
+
+\mypartitle{Task overview.} Participants are provided with a collection of TV broadcast recordings pre-segmented into shots.
+Each shot $s \in \shots$ has to be automatically tagged with the names of people both speaking and appearing at the same time during the shot: this tagging algorithm is denoted by $\hypLabels : \shots \mapsto \mathcal{P}(\hypNames)$ in the rest of the paper.
+
+As last year, the list of persons is not provided \emph{a priori}, and person biometric models (neither voice nor face) can not be trained on external data in the primary runs. The only way to identify a person is by finding their name $n \in \hypNames$ in the audio (\emph{e.g.} using speech transcription -- ASR) or visual (\emph{e.g.} using optical character recognition -- OCR) streams and associating them to the correct person. This makes the task completely unsupervised (\emph{i.e.} using algorithms not relying on pre-existing labels or biometric models). The main novelty of this year task is that participants may use their contrastive run to try brave new ideas that may rely on any external data, including textual metadata provided with the test set.
+
+Because person names are detected and transcribed automatically, they may contain transcription errors to a certain extent (more on that later in Section~\ref{sec:metric}). In the following, we denote by $\refNames$ the set of all possible person names in the universe, correctly formatted as \texttt{firstname\_lastname} -- while $\hypNames$ is the set of hypothesized names.
+
+\begin{figure}[!htb]
+ \centering
+ \includegraphics[width=1.\linewidth]{evidence.pdf}
+
+ \caption{For each shot, participants have to return the names of every speaking face. Each name has to be backed up by an evidence.}
+ \label{fig:evidence}
+\end{figure}
+
+\mypartitle{Datasets and annotation.} The test set is divided into three datasets: INA, DW and 3-24. The INA dataset contains a full week of broadcast for 2 TV channels for a total duration of 90 hours in French. The DW dataset~\cite{EUMSSI} is composed of video downloaded from Deutsche Welle website, in English and German for a total duration of 50 hours. The last dataset contains 13 hours of broadcast from 3/24 Catalan TV news channel. Each shot has been tagged with the names of people who appear and speak within that shot.
+
+\mypartitle{Metrics.} The task is evaluated indirectly as an information retrieval task, using the folllowing principle.
+%
+For each query $q \in \queries \subset \refNames$ (\texttt{first\-name\_lastname}), returned shots are first sorted by the edit distance between the hypothesized person name and the query $q$ and then by confidence scores.
+Average precision $\text{AP}(q)$ is then computed classically based on the list of relevant shots (according to the groundtruth) and the sorted list of shots. Finally, Mean Average Precision is computed as follows:
+\begin{align}
+            \text{MAP} & = \frac{1}{|\queries|} \sum_{q \in \queries} \text{AP}(q) \nonumber
+\end{align}
+
+\subsection{Overview of our approaches}
+
 \endinput

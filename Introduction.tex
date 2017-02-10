@@ -29,67 +29,12 @@ these approaches have never been fully investigated and compared as whole system
 To emphasize on the unsupervised nature of real world applications, we applied these approaches on a large scale multimedia dataset associated to the ``Multimodal Person Discovery in Broadcast TV'' task~\cite{POIGNANT--MEDIAEVAL--2015,bredin2016mediaeval}.
 %
 The benchmarking results allow us to analyse all 3 approaches to understand their pros and cons to draw lessons for good practice in large-scale person discovery in broadcast news.
+
+The next Section introduces more details into the Person Discovery challenge about its corpus and evaluation protocol.
+Then Section \ref{sec:overview} gives an overview about our approaches while Section \ref{sec:methods} describes the methodologies in full details.
+Section \ref{sec:experiment} presents the conducted experiments and analysis.
 %
-The overview of the task and the approaches is now further introduced.
-
-\subsection{MediaEval Person Discovery challenge}
-
-\mypartitle{Task overview.} Participants are provided with a collection of TV broadcast recordings pre-segmented into shots.
-Each shot $s \in \shots$ has to be automatically tagged with the names of people both speaking and appearing at the same time during the shot: this tagging algorithm is denoted by $\hypLabels : \shots \mapsto \mathcal{P}(\hypNames)$ in the rest of the paper.
-
-The list of persons is not provided \emph{a priori}, and person biometric models (neither voice nor face) can not be trained on external. The only way to identify a person is by finding their name $n \in \hypNames$ in the audio (\emph{e.g.} using ASR) or visual (\emph{e.g.} using OCR) streams and associating them to the correct person (Fig. \ref{fig:evidence}). %This makes the task completely unsupervised (\emph{i.e.} using algorithms not relying on pre-existing labels or biometric models). 
-Because person names are detected and transcribed automatically, they may contain transcription errors to a certain extent (more on that later in Section~\ref{sec:metric}). In the following, we denote by $\refNames$ the set of all possible person names in the universe, correctly formatted as \texttt{firstname\_lastname} -- while $\hypNames$ is the set of hypothesized names.
-
-\begin{figure}[!htb]
- \centering
- \includegraphics[width=1.\linewidth]{evidence.pdf}
-
- \caption{For each shot, participants have to return the names of every speaking face. An evidence is also returned for annotation process.}
- \label{fig:evidence}
-\end{figure}
-
-\mypartitle{Datasets and annotation.} The test set is divided into three datasets: INA, DW and 3-24. The INA dataset contains a full week of broadcast for 2 TV channels for a total duration of 90 hours in French. The DW dataset~\cite{EUMSSI} is composed of video downloaded from Deutsche Welle website, in English and German for a total duration of 50 hours. The last dataset contains 13 hours of broadcast from 3/24 Catalan TV news channel. Each shot has been tagged with the names of people who appear and speak within that shot.
-%
-\mycomment{Need more statistics on the dataset. Maybe a table should be sufficient.}
-
-From the submissions of all participants, a set of hypotheses are generated for each shot. 
-%
-First thumbnail for a person. Correct names 
-%
-Second verify if that person 
-%
-Need statistics on the annotations (how many queries? shots? frequency of shots per name)
-
-\mypartitle{Metrics.} The task is evaluated indirectly as an information retrieval task, using the folllwing principle.
-%
-For each query $q \in \queries \subset \refNames$ (\texttt{first\-name\_lastname}), returned shots are first sorted by the edit distance between the hypothesized person name and the query $q$ and then by confidence scores.
-Average precision $\text{AP}(q)$ is then computed classically based on the list of relevant shots (according to the groundtruth) and the sorted list of shots. Finally, Mean Average Precision is computed as follows:
-\begin{align}
-            \text{MAP} & = \frac{1}{|\queries|} \sum_{q \in \queries} \text{AP}(q) \nonumber
-\end{align}
-
-\subsection{Overview of our approaches}
-
-Basic of all approaches: people with similar faces and voices should have the same name. finding name candidates, propagates the names to similar appearances. Choke points: finding names, face / speech similarities, propagate names. Depends on how to deal with these choke points --> different approaches:
-
-\mypartitle{Clustering-based naming.} 
-Most common baseline. Face/speech tracks are first aggregated into homogeneous clusters according to person identities. Then each clusters is tagged with the most probable person name.
-
-\mypartitle{Verification-based name propagation.} 
-Clustering has 1 big disadvantage is relies on clustering. Error cannot be recovered. Higher priority on names, build discriminative models.
-Verification.
-A person name is first assigned to the most probable face/speech track. The name is then propagated to all face/speech tracks which are verified to have the same identity.
-
-\mypartitle{Graph-based name propagation.} Another method to get around clustering. Verification is one-one, clustering is global. Graphbased more hybrid to make use of both.
-A graph is built with a face/speech track as a node and weight of edges is the similarity. Some nodes are initially tagged with the names. Names are then propagated along the edges within the graph.
-
-Clustering depends on models, verification and graphbased needs good names. Has different pros and cons, benchmarking to find best answers.
-There are several problems related to these approaches such as face / speech representation, person diarization, or audio-visual verification. Each of these problems has been well studied within its respective context~\cite{recog,veri,rep}. 
-%
-However, these approaches have never been fully investigated and compared as whole systems in the large-scale multimedia indexing context before. In this paper, the authors aim to investigate all these approaches with variations in their components using real world datasets from TV news. 
-
-discriminative, audio-visual combination, and minimize error rates.
-
-The major drawbacks of clustering-based naming is its reliance on clustering results. 
+Finally, Section \ref{sec:discuss} concludes the paper 
+with further discussion and future works.
 
 \endinput

@@ -7,7 +7,7 @@ In this approach, a video must be segmented in an unsupervised way into homogene
 
 Given the video shots, face diarization process consists of (i) face detection, detecting faces appearing within each shot, (ii) face tracking, extending detections into continuous tracks within each shot, and (iii) face clustering, grouping all tracks with the same identity into clusters.
 
-\subsubsection{First system}
+\subsubsection{LIMSI system}
 
 Face tracking-by-detection is applied within each shot using a detector based on histogram of oriented gradients~\cite{Dalal2005} and the correlation tracker proposed by \emph{Danelljan et al.}~\cite{Danelljan2014}. 
 %
@@ -15,7 +15,7 @@ Each face track is then described by its average \emph{FaceNet} embedding and co
 %
 Finally, average-link hierarchical agglomerative clustering is applied. Source code for this module is available in \emph{pyannote-video}\footnote{\url{http://pyannote.github.io}}.
 
-\subsubsection{Second system}
+\subsubsection{EUMSSI system}
 
 A fast version of deformable part-based model (DPM)~\cite{felzenszwalb2010dpm,dubout2013deformable} is first applied. Then tracking is performed using the CRF-based multi-target tracking framework~\cite{heili2014tracking}, which relies on the unsupervised learning of time sensitive association costs for different features.
 %

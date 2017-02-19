@@ -1,9 +1,9 @@
-\section{Multimodal improvement}
+\section{Multimodal improvements}
 \label{sec:naming}
 
-TBA
+As names are propagated based on the outputs of face and speech processing modules independently in CBN and VBN, we employed a fusion strategy to aggregate the results. Meanwhile, it is more straightforward to combine 2 modalities in GBN.
 
-\subsection{Late fusion ranking}
+\mypartitle{Late fusion ranking}
 
 Let $S = \{s_k\}$ be the list of testing shots. Within each shot, $\{N^F_i, t(N^F_i)\}$ is the set of names returned by face naming and the corresponding talking scores and $\{N^A_i, 1.0\}$  is the set of names returned by speaker naming, each is ranked equally with score 1.0.
 %
@@ -11,9 +11,17 @@ The names which the two methods agree on are ranked highest.
 %
 Then, names from face naming are ranked higher than speaker naming  because we found that face naming is more reliable in empirical experiments.
 %
-Alternative strategies that rank speaker naming equal or higher than face naming gave inferior results.
+%Alternative strategies that rank speaker naming equal or higher than face naming gave inferior results.
 %
-Our ranking strategy is described in Algo. \ref{algo:ranking}. 
+The same late fusion strategy is applied to both clustering-based naming and verification-based naming.
+
+\mypartitle{Audiovisual similarity}
+
+For the graph-based approach, the audio and visual modalities can be combined straightforwardly into one similarity.
+%
+Thus the distance is extended to multi-modality by using a linear combination of the audio and visual similarities defined in section \ref{ssec:graph_gen}: $\sigma^{AV}_{ij} = \beta \sigma^V_{ij} + (1-\beta) \sigma^A_{ij}$. $\beta$ is set experimentally to 0.5.
+
+\endinput
 
 \begin{algorithm}
   \caption{Ranking names within shots
@@ -39,13 +47,3 @@ Our ranking strategy is described in Algo. \ref{algo:ranking}.
   \end{algorithmic}
 \end{algorithm}
 %
-
-\subsection{UPC Late fusion ranking}
-
-The multimodal tracking system is implemented as fusion of different modalities. Speaker and Face Traking system outputs are merged using two different methods. The first method was the intersection of the shots of both tracking systems, averaging the confidence of the intersected shots. In the second method, the union strategy  was implemented relying on the intersected shots of both modalities and reducing the confidence of those not intersected.
-
-\subsection{Audiovisual Similarity}
-
-The graph-based approach by the MOTIF team is extended to multimodality by using a linear combination of the audio and visual similarities defined in section \ref{ssec:graph_gen}: $\sigma^{AV}_{ij} = \beta \sigma^V_{ij} + (1-\beta) \sigma^A_{ij}$. $\beta$ is set experimentally to 0.5.
-
-\endinput

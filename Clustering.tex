@@ -1,7 +1,15 @@
 \section{Clustering-based naming}
 \label{sec:clustering}
 
-In this approach, a video must be segmented in an unsupervised way into homogeneous clusters according to person identity using face clustering and speaker diarization. Then, the clusters are combined with the detected names to compute the optimal assignment.
+In this approach, a video must be segmented in an unsupervised way into homogeneous clusters according to person identity using face clustering and speaker diarization. Then, the clusters are combined with the detected names to compute the optimal assignment (Fig.~\ref{fig:cbn}).
+
+\begin{figure}[!htb]
+ \centering
+ \includegraphics[width=1.\linewidth]{CBN.png}
+
+ \caption{Clustering-based naming process. Light blue boxes are when names are combined with clusters.}
+ \label{fig:cbn}
+\end{figure}
 
 \subsection{Face clustering}
 

@@ -1,13 +1,21 @@
-\section{Name initialization and graph-based propagation}
+\section{Graph-based naming}
 \label{sec:graph}
 
 %The MOTIF team (IRISA/Inria-Rennes and PUC Minas) considered a graph-based approach for naming the people which are both visible and heard (``speaking faces''). 
 In this approach, all the ``speaking faces'' of a video are the nodes of a complete and undirected graph $\mathcal{G}$, and each edge between two nodes is weighted by the similarity between their respective voice and/or the face track.
 % The weight matrix $\mathbf{W}$ is therefore symmetrical. 
-An initial tagging is done by associating to each face track the name(s) found in the overlays when they co-occur. Then a name-propagation is performed according to the weights of the graphs using two different strategies.
+An initial tagging is done by associating to each face track the name(s) found in the overlays when they co-occur. Then a name-propagation is performed according to the weights of the graphs using two different strategies (Fig.~\ref{fig:gbn}).
+
+\begin{figure}[!htb]
+ \centering
+ \includegraphics[width=1.\linewidth]{vbn.png}
+
+ \caption{Graph-based naming process. Light blue boxes are when nodes in graph are initiated with names.}
+ \label{fig:gbn}
+\end{figure}
 
 \subsection{Graph generation details}
-\label{ssec:graph_gen}
+\label{sec:graph_gen}
 A node is created for every ``speaking face'' detected, namely when a face track temporally overlaps a speech segment by at least 60\%. If several speech segments overlap it, the face track is associated the one with the maximal overlap.
 
 Edges between nodes are weighted using a measure of similarity deriving from the audio (voice) and/or visual (face track) similarities.

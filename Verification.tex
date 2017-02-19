@@ -1,4 +1,4 @@
-\section{Name initialization and verification}
+\section{Verification-based naming}
 \label{sec:verification}
 
 
@@ -7,8 +7,16 @@ of speech and face presence are detected and used for enrollment.
 %, as depicted in Figure \ref{fig:timeline}. 
 Once the detected people are enrolled, speaker and face recognition
 are performed for each shot in order to assign labels to that shot. 
-A decision fusion strategy is implemented in order to combine the speech and video labels. The details of the system
+A decision fusion strategy is implemented in order to combine the speech and video labels (Fig.~\ref{fig:vbn}). The details of the system
 are described below.
+
+\begin{figure}[!htb]
+ \centering
+ \includegraphics[width=1.\linewidth]{vbn.png}
+
+ \caption{Verification-based naming process. Light blue boxes are when names are combined with face tracks and speech turns to create enrollment models.}
+ \label{fig:vbn}
+\end{figure}
 
 \subsection{Enrollment}
 

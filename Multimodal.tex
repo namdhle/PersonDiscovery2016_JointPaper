@@ -3,9 +3,7 @@
 
 As names are propagated based on the outputs of face and speech processing modules independently in CBN and VBN, we employed a fusion strategy to aggregate the results. Meanwhile, it is more straightforward to combine 2 modalities in GBN.
 
-\mypartitle{Late fusion ranking}
-
-Let $S = \{s_k\}$ be the list of testing shots. Within each shot, $\{N^F_i, t(N^F_i)\}$ is the set of names returned by face naming and the corresponding talking scores and $\{N^A_i, 1.0\}$  is the set of names returned by speaker naming, each is ranked equally with score 1.0.
+\mypartitle{Late fusion ranking.} Let $S = \{s_k\}$ be the list of testing shots. Within each shot, $\{N^F_i, t(N^F_i)\}$ is the set of names returned by face naming and the corresponding talking scores and $\{N^A_i, 1.0\}$  is the set of names returned by speaker naming, each is ranked equally with score 1.0.
 %
 The names which the two methods agree on are ranked highest. 
 %
@@ -15,9 +13,7 @@ Then, names from face naming are ranked higher than speaker naming  because we f
 %
 The same late fusion strategy is applied to both clustering-based naming and verification-based naming.
 
-\mypartitle{Audiovisual similarity}
-
-For the graph-based approach, the audio and visual modalities can be combined straightforwardly into one similarity.
+\mypartitle{Audiovisual similarity.} For the graph-based approach, the audio and visual modalities can be combined straightforwardly into one similarity.
 %
 Thus the distance is extended to multi-modality by using a linear combination of the audio and visual similarities defined in section \ref{ssec:graph_gen}: $\sigma^{AV}_{ij} = \beta \sigma^V_{ij} + (1-\beta) \sigma^A_{ij}$. $\beta$ is set experimentally to 0.5.
 

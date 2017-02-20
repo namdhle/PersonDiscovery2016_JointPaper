@@ -1,14 +1,13 @@
 \section{Future works}
 \label{sec:discuss}
 
-The organization of a new task on multimodal person discovery at MediaEval 2015 benchmarking initiative was well received by the community, with 9 participating teams interested in the idea of unsupervised person identification.
-The provision of a modular baseline system lowered the entry gap for the competing teams with varying scientific backgrounds. The live leaderboard allowed to overcome the condition mismatch between the development and the test
-set. The evaluation workflow relied on the CAMOMILE framework with a posteriori annotation of the corpus by the
-organizers and the participants. Very good results could thus be achieved with 82.6\% MAP for the best system. However,
-the analysis of the results shows that a simple strategy of propagating the written names to the speaker diarization output
-was sufficient, mainly due to the nature of the test corpus. This leads us to several directions for future editions of the
-task. First, we should improve the video quality and increase the content variety of the corpus; the respective weight of face
-tracking and speaker diarization would be better balanced, and the detection of pronounced names would become more useful.
-Also, the queries may be restricted to persons occuring in at least two shows, making the task definitively harder but also reducing the annotation need.
+We have presented 3 different approaches to solve the problem of unsupervised person identification in broadcast news. To have a quantitative analysis of their performance, we use the associated corpus of the Multimodal Person Discovery challenge of MediaEval 2016. In this challenge, the problem of person discovery is benchmarked as a indices retrieval system.
+%
+From the experiments, we can observe that clustering-based methods still achieve better accuracy than the alternatives. However, both verification-based and graph-based methods show promising results, which can be further improved by increasing the quality of OCR or more powerful discriminative models. 
+%
+Furthermore, these two approaches have many interesting improvements and can be exploited by combining with clustering-based methods.
+%
+Our results also emphasize the importance of multimodal processing, which is a future direction of our work.
+
 
 \endinput

@@ -1,7 +1,7 @@
 \section{Multimodal improvements}
 \label{sec:naming}
 
-As names are propagated based on the outputs of face and speech processing modules independently in CBN and VBN, we employed a fusion strategy to aggregate the results. Meanwhile, it is more straightforward to combine 2 modalities in GBN.
+As names are propagated based on the outputs of face and speech processing modules independently in CBN and VBN, we employed a fusion strategy to aggregate the results. Meanwhile, it is more straightforward to combine 2 modalities as joint similarity in GBN.
 
 \mypartitle{Late fusion ranking.} Let $S = \{s_k\}$ be the list of testing shots. Within each shot, $\{N^F_i, t(N^F_i)\}$ is the set of names returned by face naming and the corresponding talking scores and $\{N^A_i, 1.0\}$  is the set of names returned by speaker naming, each is ranked equally with score 1.0.
 %

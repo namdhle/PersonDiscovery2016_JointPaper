@@ -2,6 +2,8 @@
 \label{sec:experiment}
 
 Contrastive experiments with various configurations are conducted for each approach to better understanding them. Then we compare all approaches for further analysis. All figures are reported using Person Discovery benchmark dataset and the metrics is MAP@K $(K \in {1, 10, 100})$. MAP@10 is used as the primary number for comparison.
+%
+The common baseline is when no name propagation is conducted, \emph{i.e} when names are only associated to the most overlapped face / voice. The baseline achieves 55.9, 33.8, and 32.8 of MAP@1,10,100 respectively.
 
 \subsection{Contrastive Results}
 
@@ -34,7 +36,7 @@ Finally when AV results are fused, we can observe a substantial improvement in b
 
 \mypartitle{Verification-based naming.} Tab.~\ref{tab:verification} shows the results achieved with UVigo and UPC systems. UVigo systems perform better on audio domain than on visual one because the face system only verifies the most dominant face of each shot.
 %
-Meanwhile for UPC systems, the one based on face verification works better than that of speech processing. UPC face system also has problem when multiple individuals are associated with a single text name. Similarly to CBN, speech processing system cannot be used individually to perform in this task. It must be combined with other face system.
+Meanwhile for UPC systems, the one based on face verification works better than that of speech processing. UPC face system also has problem when multiple individuals are associated with a single text name. Similarly to CBN, speech processing system cannot be used individually to perform in this task and must be combined with other face system.
 %
 Multimodal systems slightly improved the performance of monomodal approaches.
 
@@ -57,7 +59,7 @@ Multimodal systems slightly improved the performance of monomodal approaches.
 
 \mypartitle{Graph-based naming.} Tab.~\ref{tab:graph} gathers the performances obtained by the graph-based systems. In all cases, graph propagation enhances the results over the baseline by around 20\%. The audiovisual version of RW improves the performances for RW by over 2\% w.r.t. visual version only, which is not the case for MST (over 1\%). This case is in favor of a better tuning of the fusion parameters.
 %
-Overall, the hierarchical tag propagation on graphs  combining  CNN  visual  similarity  and  binary  voice similarity (primary) consistently outperforms other combinations, showing the interest of combining audio and visual similarities.  
+Overall, the hierarchical tag propagation on graphs  combining  CNN  visual  similarity  and  binary  voice similarity consistently outperforms other combinations, showing the interest of combining audio and visual similarities.  
 
 
 \begin{table}[tb]
@@ -79,9 +81,9 @@ Overall, the hierarchical tag propagation on graphs  combining  CNN  visual  sim
 
 \subsection{Analysis of 3 approaches}
 
-Out of 3 strategies, VBN achieves inferior results. This may due to the fact that the verification models are trained using only 1 track, which does not contains enough variation. 
+VBN achieves inferior results, which may due to the fact that the verification models are trained using only 1 track, which does not contains enough variation. 
 %
-Moreover, this approach relies on the quality of OCR-NER. A false name can leads to spreading of wrong names to multiple shots. In the future, some early clustering can help to increase the size of training data while some text filtering can increase the precision of enrollment.
+Moreover, this approach relies on the quality of OCR-NER. A false name can leads to spreading of wrong names to multiple shots. In the future, some early clustering can help to increase the size of training data while some text filtering can increase the precision of enrolment.
 %
 On the other hand, GBN requires a face track and a speech turn to be sufficiently overlapped before assigning a name, thus reducing the effect of false texts. Also the combination of AV similarities force a face and a voice to have the same identity to be tagged, which implicitly performs talking face detection.
 %

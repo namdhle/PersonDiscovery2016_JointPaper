@@ -16,7 +16,7 @@ An initial tagging is done by associating to each face track the name(s) found i
 \end{figure}
 
 \subsection{Graph generation details}
-\label{sec:graph_gen}
+\label{ssec:graph_gen}
 A node is created for every ``speaking face'' detected, namely when a face track temporally overlaps a speech segment by at least 60\%. If several speech segments overlap it, the face track is associated the one with the maximal overlap.
 
 Edges between nodes are weighted using a measure of similarity deriving from the audio (voice) and/or visual (face track) similarities.

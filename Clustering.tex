@@ -1,7 +1,7 @@
 \section{Clustering-based naming}
 \label{sec:clustering}
 
-In this approach, a video must be segmented in an unsupervised way into homogeneous clusters according to person identity using face clustering and speaker diarization. Then, the clusters are combined with the detected names to compute the optimal assignment (Fig.~\ref{fig:cbn}).
+In this approach, a video must be segmented into homogeneous clusters according to person identity using face clustering and speaker diarization. Then, the clusters are combined with the detected names to compute the optimal assignment (Fig.~\ref{fig:cbn}).
 
 \begin{figure}[!htb]
  \centering
@@ -14,7 +14,7 @@ In this approach, a video must be segmented in an unsupervised way into homogene
 
 \subsection{Face clustering}
 
-Given the video shots, face diarization process consists of (i) face detection, detecting faces appearing within each shot, (ii) face tracking, extending detections into continuous tracks within each shot, and (iii) face clustering, grouping all tracks with the same identity into clusters.
+Given the video shots, face clustering process consists of (i) face detection, detecting faces appearing within each shot, (ii) face tracking, extending detections into continuous tracks within each shot, and (iii) face clustering, grouping all tracks with the same identity into clusters.
 
 \subsubsection{LIMSI system}
 
@@ -26,7 +26,7 @@ Finally, average-link hierarchical agglomerative clustering is applied. Source c
 
 \subsubsection{EUMSSI system}
 
-A fast version of deformable part-based model (DPM)~\cite{felzenszwalb2010dpm,dubout2013deformable} is first applied. Then tracking is performed using the CRF-based multi-target tracking framework~\cite{heili2014tracking}, which relies on the unsupervised learning of time sensitive association costs for different features.
+A fast version of deformable part-based model (DPM)~\cite{dubout2013deformable} is first applied. Then tracking is performed using the CRF-based multi-target tracking framework~\cite{heili2014tracking}, which relies on the unsupervised learning of time sensitive association costs for different features.
 %
 The detector is only applied 4 times per second and an explicit false alarm classifier at the track level is learned\cite{Le_ICPR_2016}.
 %
@@ -45,7 +45,7 @@ Music and jingle regions are removed using a Viterbi decoding with 8 GMMs (train
 At this point each cluster contains the voice of only one speaker, but several clusters can be related to a same speaker. The background environment contribution must be removed from each GMM cluster, through feature gaussianization.
 %
 Finally, the system is completed with clustering method based on the i-vectors paradigm and Integer Linear Programming (ILP). 
-This clustering method is fully described in~\cite{rouvier12-2} and~\cite{dupuy2014}. 
+This clustering method is fully described in~\cite{rouvier12-2}. 
 %The ILP clustering along with i-vectors speaker models gives better results than the usual hierarchical agglomerative clustering based on GMMs and cross-likelihood distances~\cite{Barras2006}.
 
 \subsection{Name assignment}

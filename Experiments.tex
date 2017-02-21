@@ -1,11 +1,11 @@
 \section{Experiments}
 \label{sec:experiment}
 
-Remark MAP@10. Contrative
+Contrastive experiments with various configurations are conducted for each approach to better understanding them. Then we compare all approaches for further analysis. All figures are reported using Person Discovery benchmark dataset and the metrics is MAP@K $(K \in {1, 10, 100})$. MAP@10 is used as the primary number for comparison.
 
 \subsection{Contrastive Results}
 
-\mypartitle{Clustering-based naming.} Tab.~\ref{tab:clustering} shows the results using CBM with differen tsettings. First, we test a system based solely on speaker diarization (A), which is common for both LIMSI and EUMSSI. The precision is greatly far behind the baseline. This is because speech turns are wrongly over-clustered due to dubbing and voice-over.
+\mypartitle{Clustering-based naming.} Tab.~\ref{tab:clustering} shows the results using CBM with different settings. First, we test a system based solely on speaker diarization (A), which is common for both LIMSI and EUMSSI. The precision is greatly far behind the baseline. This is because speech turns are wrongly over-clustered due to dubbing and voice-over.
 %
 When comparing 2 face clustering methods, LIMSI (V) outperforms EUMSSI (V) at MAP@1 while being slightly behind in MAP@10. This can be explained by the more robust detector used in EUMSSI (V) which detects faces at multiple poses while LIMSI (V) only detects frontal faces which has higher precision.
 %
@@ -63,6 +63,7 @@ Overall, the hierarchical tag propagation on graphs  combining  CNN  visual  sim
 \begin{table}[tb]
 \label{tab:graph}
 \centering
+\vspace*{-5mm}
 \caption{Mean Average Precisions @K obtained by graph-based systems.}
 \vspace*{-2mm}
 \begin{tabular}{c|c|c|c|| c|c|c|}
@@ -77,6 +78,18 @@ Overall, the hierarchical tag propagation on graphs  combining  CNN  visual  sim
 \end{table}
 
 \subsection{Analysis of 3 approaches}
+
+Out of 3 strategies, VBN achieves inferior results. This may due to the fact that the verification models are trained using only 1 track, which does not contains enough variation. 
+%
+Moreover, this approach relies on the quality of OCR-NER. A false name can leads to spreading of wrong names to multiple shots. In the future, some early clustering can help to increase the size of training data while some text filtering can increase the precision of enrollment.
+%
+On the other hand, GBN requires a face track and a speech turn to be sufficiently overlapped before assigning a name, thus reducing the effect of false texts. Also the combination of AV similarities force a face and a voice to have the same identity to be tagged, which implicitly performs talking face detection.
+%
+However, discriminative talking detection model still outperforms when applied in CBN systems. Therefore, using this taking face detector in GBN is an interesting future work. 
+%
+VBN can be used to learn more discriminative similarity for GBN edges.
+%
+Lastly, the effectiveness of combining with audio and visual results is still not as significant as other improvements. This requires further experiments in the future to fully exploit the potential of multimodal processing.
 
 \endinput
 

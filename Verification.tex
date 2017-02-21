@@ -23,15 +23,15 @@ are described below.
 
 \subsubsection{GTM-UVigo system}
 First, audio and video features were extracted from the recordings. The audio features were 19 MFCCs plus delta, acceleration and energy. For the video features, first
-the baseline face tracking approach was used to detect faces, and then discrete cosine transform (DCT) features were extracted and normalized with Bob toolkit \cite{bob2012}.
+the LIMSI approach was used to detect faces, and then discrete cosine transform (DCT) features were extracted and normalized with Bob toolkit \cite{bob2012}.
 %using blocks of size 12
 %with 50\% overlap and 45 DCT comonents using the Bob toolkit \cite{bob2012}, preceeded by %geometric normalization and photometric enhancement using the Tan\&Triggs algorithm
 %\cite{tan2010}.
 
 For each person name detected by the OCR, the intervals of voice activity detection and appearance of that person were extracted. For the audio, 
 the time interval $(t_{\mathrm{start}},t_{\mathrm{end}})$ in which the name of the speaker $spk$ appears is taken as a starting point. A strategy to enlarge this time
- interval in order to obtain more data to enroll the speaker is applied: the boundaries $(t_{\mathrm{start}},t_{\mathrm{end}})$ are iteratively extended $10ms$ to each direction until a change point is detected using the Bayesian information criterion algorithm
- (BIC) for speaker segmentation
+ interval in order to obtain more data to enroll the speaker is applied: the boundaries $(t_{\mathrm{start}},t_{\mathrm{end}})$ are iteratively extended $10ms$ to each direction until a change point is detected using the BIC algorithm
+for speaker segmentation.
 %
 % given the time intervals $S_{\mathrm{left}} = (t_{\mathrm{start}}-10,t_{\mathrm{end}})$ and 
 % $S_{\mathrm{right}} = (t_{\mathrm{start}},t_{\mathrm{end}}+10)$, a change point is searched within each of these intervals using the Bayesian information criterion algorithm
@@ -41,14 +41,17 @@ the time interval $(t_{\mathrm{start}},t_{\mathrm{end}})$ in which the name of t
 % $S_{\mathrm{right}}$ then $t_{\mathrm{right}}$ is set to $t_{\mathrm{end}}+10$. Then, speaker $spk$ is assumed to be speaking in the interval 
 % $S_{\mathrm{spk}} = (t_{\mathrm{left}},t_{\mathrm{right}})$. 
 % 
+
 For the video, the faces detected by the face tracker in the interval $(t_{\mathrm{start}},t_{\mathrm{end}})$ in 
- which the name of the speaker $spk$ appears were considered; given that only one face was detected, the whole presence interval of that face is taken but, in case more than 
- one face was detected, the one that appeared in more frames was assigned to the speaker, assuming that was the dominant face in the given time interval.
+ which the name of the speaker $spk$ appears were considered.
+ %; given that only one face was detected, the whole presence interval of that face is taken but, 
+ In case more than one face was detected, the one that appeared in more frames was assigned to the speaker.
+ %, assuming that was the dominant face in the given time interval.
  %In case the person appears several times in the OCR output, a segment is computed for each occurrence.
+ %
  
- Finally, once the intervals of appearance are defined, an i-vector \cite{dehak10} is extracted for each modality using Kaldi toolkit \cite{kaldi}; in the case of speech, speech activity detection (SAD) was performed
- beforehand, in order to remove the non-speech intervals. In case several segments were available for a person name, their features were concatenated and all the segments
- were treated as a single one.
+ Once the intervals of appearance are defined, an i-vector \cite{dehak10} is extracted for each modality using Kaldi toolkit \cite{kaldi}; in the case of speech, speech activity detection (SAD) was performed beforehand, in order to remove the non-speech intervals. In case several segments were available for a person name, their features were concatenated into a single one.
+ %and all the segments  were treated as a single one.
 
 \subsubsection{UPC system}
 
@@ -56,10 +59,12 @@ Using the OCR-NER output, we extracted the \textit{speaker segments/face tracks}
 %with the identity given by the written name 
 and will be used to create models for the named person in an unsupervised enrolment step. The models, consisting in a feature vector and a name label, are used to train a verification system.
 
-Speaker information was extracted using an i-vector based speaker tracking system. Assuming that text names are temporarily overlapped with their speaker and face identities, speaker models were created using the data of those text tracks. The baseline speaker diarization was used to select speaker turn segments assigned to OCR names so as to extract the i-vector queries. Speaker modelling was implemented using i-vectors \cite{dehak10}. For the feature extraction, 20 Mel Frequency Cepstral Coefficients (MFCC) plus delta and acceleration coefficients were extracted. Using the Alize  toolkit\cite{Bonastre1,Bonastre2}, a total variability matrix has been trained per show. Therefore, a 400 size i-vector has been extracted for the speaker turn of each query. Those queries with a speaker turn duration beyond 3 seconds were discarded.
+Speaker information was extracted using an i-vector based speaker tracking system. 
+%Assuming that text names are temporarily overlapped with their speaker and face identities, speaker models were created using the data of those text tracks. 
+%The baseline speaker diarization was used to select speaker turn segments assigned to OCR names so as to extract the i-vector queries. 
+Speaker modelling was implemented using i-vectors \cite{dehak10}. For the feature extraction, 20 MFCCs plus delta and acceleration coefficients were extracted. Using the Alize toolkit\cite{Bonastre1}, a total variability matrix has been trained per show. Therefore, a 400 size i-vector has been extracted for the speaker turn of each query. Those queries with a speaker turn duration beyond 3 seconds were discarded.
 
-The VGG-face~\cite{parkhi15deep} Convolutional Neural Network (CNN) was used for feature extraction. We extracted the features from the activation of the last fully connected layer and we trained a triplet network architecture~\cite{Schroff2015} with these features using the XXXX face database. An autoencoder was used to reduce the dimensionality of the VGG vector to 1024. 
-The features from each of the detected faces in each track were extracted using this network, and then averaged to obtain a single feature vector for each track, of size 1024.
+We extracted the features from the activation of the last fully connected layer of VGG-face~\cite{parkhi15deep} Convolutional Neural Network (CNN) to train a triplet network architecture~\cite{Schroff2015} using the XXXX face database. An autoencoder was used to reduce the dimensionality of the VGG vectors to 1024. The features from each of the detected faces in each track were extracted and then averaged to obtain a single feature vector.
 
 \subsection{Search}
 
@@ -76,7 +81,7 @@ the scores were greater than a threshold.
 
 \subsubsection{UPC system}
 
-For the speech modality, target i-vectors have been extracted from 3 seconds segments with a 0.5 second shift. The identification was performed evaluating the cosine distance of the i-vectors with each query i-vector. The query with the lowest distance was assigned to the segment. A global distance threshold was previously trained with the development database so as to discard assignations with high distances.
+For the speech modality, target i-vectors have been extracted from $3s$ segments with a $0.5s$ shift. The identification was performed evaluating the cosine distance of the i-vectors with each query i-vector. The query with the lowest distance was assigned to the segment. A global distance threshold was previously trained with the development database to discard assignations with high distances.
 
 For the video modality, using the set of named tracks from the full video corpus, a Gaussian Naive Bayes (GNB) binary classifier model was trained, using the euclidean distance between pairs of samples from the named tracks. Then, for each specific video, each unnamed track was compared with all the named tracks of the video, computing the euclidean distance between the respective feature vectors of the tracks. This value was classified using the GNB to either being a intra-class distance (both tracks belong to the same identity) or an inter-class distance (the tracks are not from the same person). The probability of the distance being intra-class was used as the confidence score. The unnamed track was assigned the identity of the most similar named track. A threshold on the confidence score (0.75) was used to discard tracks not corresponding to any named track.
 

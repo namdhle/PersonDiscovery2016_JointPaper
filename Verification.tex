@@ -64,7 +64,7 @@ Speaker information was extracted using an i-vector based speaker tracking syste
 %The baseline speaker diarization was used to select speaker turn segments assigned to OCR names so as to extract the i-vector queries. 
 Speaker modelling was implemented using i-vectors \cite{dehak10}. For the feature extraction, 20 MFCCs plus delta and acceleration coefficients were extracted. Using the Alize toolkit\cite{Bonastre1}, a total variability matrix has been trained per show. Therefore, a 400 size i-vector has been extracted for the speaker turn of each query. Those queries with a speaker turn duration beyond 3 seconds were discarded.
 
-We extracted the features from the activation of the last fully connected layer of VGG-face~\cite{parkhi15deep} Convolutional Neural Network (CNN) to train a triplet network architecture~\cite{Schroff2015} using the XXXX face database. An autoencoder was used to reduce the dimensionality of the VGG vectors to 1024. The features from each of the detected faces in each track were extracted and then averaged to obtain a single feature vector.
+We extracted the features from the activation of the last fully connected layer of VGG-face~\cite{parkhi15deep} Convolutional Neural Network (CNN) to train a triplet network architecture~\cite{Schroff2015} using the FaceScrub and LFW datasets~\cite{huang2007lfw,ng2014data}. An autoencoder was used to reduce the dimensionality of the VGG vectors to 1024. The features from each of the detected faces in each track were extracted and then averaged to obtain a single feature vector.
 
 \subsection{Search}
 

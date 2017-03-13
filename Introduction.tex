@@ -10,11 +10,11 @@ As the retrieval of information on people in videos is of high interest for user
 Started in 2011, the REPERE challenge aimed at supporting research on multimodal person recognition~\cite{BERNARD--SLAM--2013, GIRAUDEL--LREC--2012}. Its main goal was to answer the two questions \emph{``who speaks when?''} and \emph{``who appears when?''} using any available source of information (including pre-existing biometric models and person names extracted from the videos).
 %from text overlay and speech transcripts). 
 %
-Thanks to this challenge and the associated multimodal corpus~\cite{GIRAUDEL--LREC--2012}, significant progress was achieved in either supervised or unsupervised multimodal person recognition~\cite{BECHET--INTERSPEECH--2014, BREDIN--IJMIR--2014, GAY--CBMI--2014, poignant2012fusion, ROUVIER--CBMI--2014}.
+Thanks to this challenge and the associated multimodal corpus~\cite{GIRAUDEL--LREC--2012}, significant progresses were achieved in either supervised or unsupervised multimodal person recognition~\cite{BECHET--INTERSPEECH--2014, BREDIN--IJMIR--2014, GAY--CBMI--2014, poignant2012fusion, ROUVIER--CBMI--2014}.
 
-However, when the content is created or broadcast, it is not always possible to predict which people will be the most important to find in the future and biometric models may not yet be available at indexing time.
+However, when a content is created or broadcast, it is not always possible to predict which people will be the most important to find in the future and biometric models may not yet be available at indexing time.
 %
-The goal of this task is thus to address the challenge of indexing people in the archive under real-world conditions, \emph{i.e.} when there is no pre-set list of people to index.
+Under real world conditions, one  goal is to index people in the archive when there is no pre-set list of people to index.
 %
 This makes the task completely unsupervised.
 %
@@ -22,26 +22,28 @@ In order to successfully tag people with the correct identities, names must firs
 %
 Then one must find a way to assign a name correctly to a presence of the corresponding person, and that name must also be propagated to all the shots during which that person appears and speaks. 
 %
-A standard approach to solve this is first based on face / speech clustering to partition a videos into homogeneous segments according to identities, followed by the assignment of names to segments appropriately.
+
+
+A standard approach to solve this is first based on face/speech clustering to partition a videos into homogeneous segments according to identities, followed by the assignment of names to segments appropriately.
 %
-Although commonly used in state-of-the-art systems~\cite{le2015eumssi,poignant2012fusion}, it suffers from several drawbacks such as potential errors of face / speech clustering or the lack of straightforward way to combine audio-visual streams.
+Although commonly used in state-of-the-art systems~\cite{le2015eumssi,poignant2012fusion}, it suffers from several drawbacks such as potential errors of face/speech clustering or the lack of straightforward way to combine audio-visual streams.
 %
 In order to alleviate these drawbacks of clustering-based naming %as well as to take advantage of recent advances in verification and 
 two alternative strategies are proposed based on verification and graph optimization. 
 %
-All these three strategies share some common building blocks such as face / speech representation, person diarization, or audio-visual verification. Though each of these blocks has been well studied within its respective context~\cite{parkhi15deep,wallace2012total,Schroff2015,Ben}. 
+All these three strategies share some common building blocks such as face/speech representation, person diarization, or audio-visual (AV) verification. Though each of these blocks has been well studied within its respective context~\cite{parkhi15deep,wallace2012total,Schroff2015,Ben}. 
 %
-However, these approaches have never been fully investigated and compared as whole systems in the large-scale multimedia indexing context before. Thus in this paper, the authors aim to investigate all these approaches with variations in their components using real world datasets from TV news. 
-%
-To emphasize on the unsupervised nature of real world applications, we applied these approaches on a large scale multimedia dataset associated to the ``Multimodal Person Discovery in Broadcast TV'' task~\cite{POIGNANT--MEDIAEVAL--2015,bredin2016mediaeval}.
+they have never been fully investigated and compared as whole systems in  multimedia indexing context before. 
+
+Thus in this paper, we  aim to investigate these approaches with variations in their components using the medium  scale multimedia dataset associated to the ``Multimodal Person Discovery in Broadcast TV'' task~\cite{POIGNANT--MEDIAEVAL--2015,bredin2016mediaeval}.
 %
 The benchmarking results allow us to analyse all 3 approaches to understand their pros and cons to draw lessons for good practice in large-scale person discovery in broadcast news.
 
-The next Section introduces more details into the Person Discovery challenge about its corpus and evaluation protocol.
-Then Section \ref{sec:overview} gives an overview about our approaches while Section \ref{sec:clustering},~\ref{sec:verification}, and~\ref{sec:graph} describe the methodologies in full details.
-Section \ref{sec:experiment} presents the conducted experiments and analysis.
-%
-Finally, Section \ref{sec:discuss} concludes the paper 
-with further discussion and future works.
+The next Section introduces more details about the Person Discovery challenge, its corpus and evaluation protocol.
+Then Section \ref{sec:overview} gives an overview about our approaches while Section \ref{sec:clustering} to \ref{sec:multimodal}
+ describe the methodologies in more details.
+Section \ref{sec:experiment} presents experiments and analysis, while 
+Section \ref{sec:discuss} concludes the paper 
+with further discussions.
 
 \endinput

@@ -1,20 +1,24 @@
-\section{Clustering-based naming}
+\section{Clustering-based naming (CBN)}
 \label{sec:clustering}
 
-In this approach, a video is segmented into homogeneous clusters according to person identity using face clustering and speaker diarization. Then, the clusters are combined with the detected names to find the optimal assignment (Fig.~\ref{fig:cbn}).
+Two tested systems followed this approach (LIMSI and EUMSSI)  in which, roughly speaking, 
+a video is first segmented into homogeneous clusters according to person identity using face clustering and speaker diarization, 
+and then clusters are combined with the OCR names to find an optimal assignment (Fig.~\ref{fig:cbn}).
 
-\begin{figure}[!htb]
+\begin{figure}[tb]
  \centering
  \includegraphics[width=1.\linewidth]{CBN.png}
-\vspace*{-5mm}
+\vspace*{-8mm}
  \caption{Clustering-based naming process. Light blue boxes are when names are combined with clusters.}
-\vspace*{-5mm}
+\vspace*{-3mm}
  \label{fig:cbn}
 \end{figure}
 
 \subsection{Face clustering}
 
-Given the video shots, face clustering process consists of (i) face detection, detecting faces appearing within each shot, (ii) face tracking, extending detections into continuous tracks within each shot, and (iii) face clustering, grouping all tracks with the same identity into clusters.
+Given the video shots, face clustering consists of (i) face detection, 
+(ii) face tracking (extending detections into continuous tracks), 
+and (iii) face clustering, grouping tracks with the same identity into clusters.
 
 \subsubsection{LIMSI system}
 
@@ -28,24 +32,27 @@ Finally, average-link hierarchical agglomerative clustering is applied. Source c
 
 A fast version of deformable part-based model (DPM)~\cite{dubout2013deformable} is first applied. Then tracking is performed using the CRF-based multi-target tracking framework~\cite{heili2014tracking}, which relies on the unsupervised learning of time sensitive association costs for different features.
 %
-The detector is only applied 4 times per second and an explicit false alarm classifier at the track level is learned\cite{Le_ICPR_2016}.
+The detector is only applied 4 times per second and an explicit false alarm classifier at the track level is learned~\cite{Le_ICPR_2016}.
 %
 Each face track is then described using a combination of keypoint matching distances and total variability modeling (TVM)~\cite{wallace2012total,Khoury:ICMR:2013}.
 
 \subsection{Speaker diarization}
 
 The speaker diarization system (``who speak when?") is based on the LIUM Speaker Diarization system\cite{rouvier2013}, freely distributed\footnote{\url{www-lium.univ-lemans.fr/en/content/liumspkdiarization}}. 
+%
+Music and jingle regions are first removed using a Viterbi decoding with 8 GMMs.
+% (trained on french broadcast news data) for music, jingle, silence, and speech. %(with wide/narrow band variants for the last two, and clean or noised or musical background variants for wideband speech).
 %This system has achieved the best or second best results in the speaker diarization task on REPERE French broadcast evaluation campaigns 2012 and 2013~\cite{galibert2013b}.
 %
-The diarization system is first composed of an acoustic Bayesian Information Criterion (BIC)-based segmentation followed by a BIC-based hierarchical clustering. Each cluster represents a speaker and is modeled with a full covariance Gaussian. A Viterbi decoding re-segments the signal using GMMs% with 8 diagonal components learned by EM-ML, 
+Then, the diarization system first applies an acoustic Bayesian Information Criterion (BIC)-based segmentation followed by a BIC-based hierarchical clustering. Each cluster represents a speaker and is modeled with a full covariance Gaussian. A Viterbi decoding re-segments the signal using GMMs % with 8 diagonal components learned by EM-ML, 
 for each cluster. 
 %Segmentation, clustering and decoding are performed with 12 MFCC+E, computed with a 10ms frame rate. 
-Music and jingle regions are removed using a Viterbi decoding with 8 GMMs (trained on french broadcast news data) for music, jingle, silence, and speech. %(with wide/narrow band variants for the last two, and clean or noised or musical background variants for wideband speech).
 %
 %In the above steps, features were used unnormalized in order to preserve information on the background environment, which may help differentiating between speakers. 
-At this point each cluster contains the voice of only one speaker, but several clusters can be related to a same speaker. The background environment contribution must be removed from each GMM cluster, through feature gaussianization.
+%At this point each cluster contains the voice of only one speaker, but several clusters can be related to a same speaker. 
 %
-Finally, the system is completed with clustering method based on the i-vectors paradigm and Integer Linear Programming (ILP)~\cite{rouvier12-2}. 
+In a second step, the background environment information contribution is removed from each GMM cluster through feature gaussianization,
+and a clustering based  on i-vector representation  and Integer Linear Programming (ILP) is applied~\cite{rouvier12-2}. 
 %This clustering method is fully described in. 
 %The ILP clustering along with i-vectors speaker models gives better results than the usual hierarchical agglomerative clustering based on GMMs and cross-likelihood distances~\cite{Barras2006}.
 

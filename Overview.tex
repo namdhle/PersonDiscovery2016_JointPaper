@@ -22,9 +22,9 @@ We denote by $\refNames$ the set of all possible person names in the universe, c
  \label{fig:evidence}
 \end{figure}
 
-\mypartitle{Datasets and annotation.} The test set is divided into three sets: INA, DW and 3/24. The INA dataset contains a full week of broadcast for 2 TV french channels (total duration of 90 hours). The DW dataset~\cite{EUMSSI} is composed of video downloaded from the Deutsche Welle website, in English and German for a total duration of 50 hours. The last dataset contains 13 hours of broadcast from the 3/24 Catalan TV news channel. 
+\mypartitle{Datasets and annotation.} The test set is divided into three sets: INA, DW, and 3/24. The INA dataset contains a full week of broadcast for 2 TV french channels (total duration of 90 hours). The DW dataset~\cite{EUMSSI} is composed of video downloaded from the Deutsche Welle website, in English and German for a total duration of 50 hours. The last dataset contains 13 hours of broadcast from the 3/24 Catalan TV news channel. 
 
-Each shot has been tagged with the names of people who appear and speak within that shot using the followign approach.
+Each shot has been tagged with the names of people who appear and speak within that shot using the following approach.
 %
 From all participant submissions to the challenge, a set of hypotheses were generated for each shot. 
 Then participants also engaged in an interactive annotation process.
@@ -64,10 +64,9 @@ the names of people have to be found in the audio  or visual streams.
 %Person identities can be retrieved either from speech transcripts or from overlaid person names commonly used to introduce the current speaker. 
 %
 Person identification from automatic ASR transcripts usually deteriorates performance. 
-Meanwhile, video text can be reliably extracted using OCR, and names of people appearing in the video 
-can be relatively well distinguished in OCR outputs and 
-be more easily  associated with people in the video than 
-veryfing when whether pronounced names in ASR transcripts refer to people visible in the video. 
+Meanwhile, video text can be reliably extracted using OCR, and names of people appearing in the video can be relatively well distinguished in OCR outputs.
+They can be also associated with people in the video more easily than 
+verifying when whether pronounced names in ASR transcripts refer to people visible in the video. 
 Thus, in this work we use only names coming from OCR segments.
 
 For  OCR recognition, we relied on the approaches described in \cite{chen-pr04}.
@@ -83,7 +82,7 @@ Then, multiple image segmentations of the same text region are decoded, and all 
 aggregated over time to produce several hypotheses. 
 %Due to the long running time, only the lower half of the videos are processed.
 %
-The best hypothesis is used to extract people names for identification. Then MITIE open library\footnote{\url{https://github.com/mit-nlp/MITIE}} is used to identify person names from texts. 
+The best hypothesis is used to extract people names for identification. Then MITIE open library\footnote{\url{https://github.com/mit-nlp/MITIE}} is used to perform named entity recognition (NER). 
 %
 %However, detecting names for identification can be more challenging due to several factors: (a) OCR text are often not sentences but short phrases, (b) names come from various languages, and (c) there are names of editorial staff who do not appear within the video, thus are not useful for identification such as cameramen or editors.
 %

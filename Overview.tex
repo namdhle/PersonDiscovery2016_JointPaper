@@ -2,16 +2,15 @@
 \label{sec:challenge}
 
 
-The goal of this challenge is to address the indexing of people in archives under real-world conditions when no
- pre-existing labels or biometric models exist.
+The goal of this challenge is to address the indexing of people in archives under real-world conditions when no pre-existing labels or biometric models exist.
 
 \mypartitle{Task overview.} Participants are provided with a collection of TV broadcast recordings pre-segmented into shots.
 Each shot $s \in \shots$ has to be automatically tagged with the names of people both speaking and appearing at the same time during the shot: this tagging algorithm is denoted by $\hypLabels : \shots \mapsto \mathcal{P}(\hypNames)$.
 
-The list of persons is not provided \emph{a priori}, and person biometric models (neither voice nor face) can not be trained on external data. 
+The list of persons is not provided \emph{a priori}, and person biometric models (neither voice nor face) cannot be trained on external data. 
 The only way to identify a person is by finding their name $n \in \hypNames$ in the audio (\emph{e.g.} using ASR) or visual (\emph{e.g.} using OCR) streams and associating them to the correct person (Fig. \ref{fig:evidence}). %This makes the task completely unsupervised (\emph{i.e.} using algorithms not relying on pre-existing labels or biometric models). 
 %Because person names are detected and transcribed automatically, they may contain transcription errors to a certain extent (more on that later in Section~\ref{sec:metric}). 
-We denote by $\refNames$ the set of all possible person names in the universe, correctly formatted as \texttt{firstname\_lastname} -- while $\hypNames$ is the set of hypothesized names.
+We denote by $\refNames$ the set of all possible person names in the universe, correctly formatted as \texttt{firstname\_lastname}, while $\hypNames$ is the set of hypothesized names.
 
 \begin{figure}[tb]
  \centering
@@ -22,9 +21,9 @@ We denote by $\refNames$ the set of all possible person names in the universe, c
  \label{fig:evidence}
 \end{figure}
 
-\mypartitle{Datasets and annotation.} The test set is divided into three sets: INA, DW, and 3/24. The INA dataset contains a full week of broadcast for 2 TV french channels (total duration of 90 hours). The DW dataset~\cite{EUMSSI} is composed of video downloaded from the Deutsche Welle website, in English and German for a total duration of 50 hours. The last dataset contains 13 hours of broadcast from the 3/24 Catalan TV news channel. 
+\mypartitle{Datasets and annotation.} The test set is divided into three sets: INA, DW, and 3/24. The INA dataset contains a full week of broadcast for two TV french channels (total duration of 90 hours). The DW dataset~\cite{EUMSSI} is composed of video downloaded from the Deutsche Welle website, in English and German for a total duration of 50 hours. The last dataset contains 13 hours of broadcast from the 3/24 Catalan TV news channel. 
 
-Each shot has been tagged with the names of people who appear and speak within that shot using the following approach.
+Partial annotation was performed to tag each shot with the names of people who appear and speak within that shot using the following approach.
 %
 From all participant submissions to the challenge, a set of hypotheses were generated for each shot. 
 Then participants also engaged in an interactive annotation process.
@@ -52,21 +51,20 @@ This annotation process yielded 3431 shots with 619 identities annotated (see Ta
 
 \mypartitle{Metrics.} The task is evaluated indirectly as an information retrieval task. %, using the following principle:
 %
-For each query $q \in \queries \subset \refNames$ (\texttt{first\-name\_lastname}), returned shots are first sorted by the edit distance between the hypothesized person name and the query $q$ and then by confidence scores.
-The Average precision $\text{AP}(q)$ is then computed based on the list of relevant shots (according to the groundtruth) and the sorted list of shots. Finally, the Mean Average Precision is computed as follows:
+For each query $q \in \queries \subset \refNames$, returned shots are first sorted by the edit distance between the hypothesized person name and the query $q$ and then by confidence scores.
+The average precision $\text{AP}(q)$ is then computed based on the list of relevant shots (according to the groundtruth) and the sorted list of shots. Finally, the mean average precision (MAP) is computed as follows:
 \begin{align}
             \text{MAP} & = \frac{1}{|\queries|} \sum_{q \in \queries} \text{AP}(q) \nonumber
 \end{align}
 
 \mypartitle{Video OCR-NER}. As the task we aim at is fully unsupervised, 
-the names of people have to be found in the audio  or visual streams.
+the names of people have to be found in the audio or visual streams.
 %
 %Person identities can be retrieved either from speech transcripts or from overlaid person names commonly used to introduce the current speaker. 
 %
 Person identification from automatic ASR transcripts usually deteriorates performance. 
-Meanwhile, video text can be reliably extracted using OCR, and names of people appearing in the video can be relatively well distinguished in OCR outputs.
-They can be also associated with people in the video more easily than 
-verifying when whether pronounced names in ASR transcripts refer to people visible in the video. 
+Meanwhile, video text can be reliably extracted using OCR and names from overlaid texts often coincide temporally with the people visible and speaking.
+%and names of people appearing in the video can be relatively well distinguished in OCR outputs. They can be also associated with people in the video more easily than verifying when whether pronounced names in ASR transcripts refer to people visible in the video. 
 Thus, in this work we use only names coming from OCR segments.
 
 For  OCR recognition, we relied on the approaches described in \cite{chen-pr04}.
@@ -89,10 +87,6 @@ The best hypothesis is used to extract people names for identification. Then MIT
 To improve the raw MITIE results, a rule-based step identifies names not corresponding to introduced people (e.g. editorial staff,  
 based on their roles like  cameraman or writer) since they  do not appear within the video.
 
-
-
-
-
 \section{Overview of our approaches}
 \label{sec:overview}
 
@@ -103,10 +97,10 @@ TV shows.
 In addition, it is not always possible to predict which people will be the most important to find in the future.
 %
 To solve these problems, detected people names are assigned to faces and voices following the basic principle 
-that occurrences with similar faces and voices should have the same name.
+that occurrences of similar faces and voices should have the same name.
 %
 Below, we briefly introduce the 3 different paradigms used in of this paper  to solve the task,
-which have different characteristics (generative vs. discriminative models, pairwise verification vs. global optimization, etc..), 
+which have different characteristics (generative vs. discriminative models, pairwise verification vs. global optimization, etc.), 
 while later sections provides more details about them.
 %
 
@@ -127,7 +121,7 @@ and a verification step on all other face/speech segments, which implictly ranks
 VBN propagates names based on a one-one distance while in CBN, all the distances are globally considered. 
 Graph-based naming is thus proposed as an hybrid approach between them.
 %
-A graph is built using  face/speech tracks as a nodes and AV similarity between nodes as edge weights. 
+A graph is built using  face/speech tracks as a nodes and AV similarities between nodes as edge weights. 
 As in VBN, some nodes are initially tagged with the names, and this information is then propagated along the edges 
 within the graph (Fig.~\ref{fig:gbn}).
 

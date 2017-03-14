@@ -1,7 +1,7 @@
 \section{Verification-based naming (VBN)}
 \label{sec:verification}
 
-Two systems (GTM-UVigo and UPC) were buid on this paradigm which, 
+Two systems (GTM-UVigo and UPC) were built on this paradigm which, 
 as summarized in the overview, can be divided in an enrollment and a 
 search (verification) stage (see (Fig.~\ref{fig:vbn}) 
 as described below.
@@ -36,7 +36,7 @@ The systems mainly differ in the identification of the associated track and the 
 %
 Given the interval  $(t_{\mathrm{start}},t_{\mathrm{end}})$ associated with the OCR name occurrence (or the set 
 of segments in the case a given name appeared several times), the person speech enrollment segment was extracted by 
-using the whole intervalle and iteratively  extending it in the past and future  by $10ms$ step until a change point 
+using the whole interval and iteratively  extending it in the past and future  by $10ms$ step until a change point 
 is detected using the BIC algorithm for speaker segmentation and using standard audio features (19 MFCCs plus delta, acceleration and energy).
 %
 On the video side, the LIMSI approach was used to detect and track faces, and the track which overlapped most with the OCR temporal 
@@ -45,24 +45,24 @@ Faces were represented with normalized DCT features.
 
 Given the audio and video enrollment data, speech segments and face tracks were represented using  
 an i-vector \cite{dehak10} extracted for each modality using the Kaldi toolkit \cite{kaldi}.
-Not that speech activity detection (SAD) was performed beforehand to remove  non-speech intervals. 
+In case of speech, speech activity detection (SAD) was performed beforehand. 
 
 
 \subsubsection{UPC system}
 %
-Speaker segments/face tracks enrollment data were obtained by maximizing the temporal overlap with the OCR name segments. 
+Speaker segments/face tracks that overlap with the OCR name segments were obtained as enrollment data. 
 %
 %Speaker information was extracted using an i-vector based speaker tracking system. 
 %Assuming that text names are temporarily overlapped with their speaker and face identities, speaker models were created using the data of those text tracks. 
 %The baseline speaker diarization was used to select speaker turn segments assigned to OCR names so as to extract the i-vector queries. 
 Speaker modelling was implemented using the Alize toolkit\cite{Bonastre1} 
-by extracting a 400-dimension  i-vector \cite{dehak10} based on  20 MFCCs plus delta and acceleration coefficients features. 
+by extracting a 400-dimension  i-vector \cite{dehak10} (20 MFCCs plus delta and acceleration). 
 %, a total variability matrix has been trained per show. 
 %Therefore, a 400 size i-vector has been extracted for the speaker turn of each query. 
 Note that OCR names with less than 3s speaker turn enrollment data were discarded.
 %Those queries with a speaker turn duration beyond 3 seconds were discarded.
 
-Regarding video, activations from the last fully connected layer of VGG-face~\cite{parkhi15deep} Convolutional Neural Network (CNN) 
+Regarding video, activations from the last fully connected layer of VGG-face~\cite{parkhi15deep} convolutional neural network (CNN) 
 were used to train a triplet network architecture~\cite{Schroff2015} using the FaceScrub and LFW datasets~\cite{huang2007lfw,ng2014data}. 
 An autoencoder was used to reduce the dimensionality of the VGG vectors to 1024. 
 The features from each of the detected faces in each track were extracted and then averaged to obtain a single feature vector.
@@ -87,9 +87,9 @@ the scores were greater than a threshold.
 
 \subsubsection{UPC system}
 
-For the speech modality, target i-vectors have been extracted from $3s$ segments with a $0.5s$ shift. The identification was performed evaluating the cosine distance of the i-vectors with each query i-vector. The query with the lowest distance was assigned to the segment. A global distance threshold was previously trained with the development database to discard assignations with high distances.
+For the speech modality, target i-vectors were extracted from $3s$ segments with a $0.5s$ shift. The identification was performed evaluating the cosine distance of the i-vectors with each query i-vector. The query with the lowest distance was assigned to the segment. A global distance threshold was previously trained with the development database to discard assignations with high distances.
 
-For the video modality, using the set of named tracks from the full video corpus, a Gaussian Naive Bayes (GNB) binary classifier model was trained, using the euclidean distance between pairs of samples from the named tracks. Then, for each specific video, each unnamed track was compared with all the named tracks of the video, computing the euclidean distance between the respective feature vectors of the tracks. This value was classified using the GNB to either being a intra-class distance (both tracks belong to the same identity) or an inter-class distance (the tracks are not from the same person). The probability of the distance being intra-class was used as the confidence score. The unnamed track was assigned the identity of the most similar named track. A threshold on the confidence score (0.75) was used to discard tracks not corresponding to any named track.
+For the video modality, using the set of named tracks from the full video corpus, a Gaussian Naive Bayes (GNB) binary classifier model was trained, using the euclidean distance between pairs of samples from the named tracks. Then, for each specific video, each unnamed track was compared with all the named tracks of the video, computing the Euclidean distance between the respective feature vectors of the tracks. This value was classified using the GNB to either being a intra-class distance (both tracks belong to the same identity) or an inter-class distance (the tracks are not from the same person). The probability of the distance being intra-class was used as the confidence score. The unnamed track was assigned the identity of the most similar named track. A threshold on the confidence score was used to discard tracks not corresponding to any named track.
 
 \endinput
 

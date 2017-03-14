@@ -38,13 +38,13 @@ Each face track is then described using a combination of keypoint matching dista
 
 \subsection{Speaker diarization}
 
-The speaker diarization system (``who speak when?") is based on the LIUM Speaker Diarization system\cite{rouvier2013}, freely distributed\footnote{\url{www-lium.univ-lemans.fr/en/content/liumspkdiarization}}. 
+The speaker diarization system (``who speaks when?") is based on the LIUM Speaker Diarization system~\cite{rouvier2013}, freely distributed\footnote{\url{www-lium.univ-lemans.fr/en/content/liumspkdiarization}}. 
 %
 Music and jingle regions are first removed using a Viterbi decoding with 8 GMMs.
 % (trained on french broadcast news data) for music, jingle, silence, and speech. %(with wide/narrow band variants for the last two, and clean or noised or musical background variants for wideband speech).
 %This system has achieved the best or second best results in the speaker diarization task on REPERE French broadcast evaluation campaigns 2012 and 2013~\cite{galibert2013b}.
 %
-Then, the diarization system first applies an acoustic Bayesian Information Criterion (BIC)-based segmentation followed by a BIC-based hierarchical clustering. Each cluster represents a speaker and is modeled with a full covariance Gaussian. A Viterbi decoding re-segments the signal using GMMs % with 8 diagonal components learned by EM-ML, 
+Then, the diarization system first applies an acoustic Bayesian Information Criterion (BIC)-based segmentation step followed by a BIC-based hierarchical clustering. Each cluster represents a speaker and is modeled with a full covariance Gaussian. A Viterbi decoding step re-segments the signal using GMMs % with 8 diagonal components learned by EM-ML, 
 for each cluster. 
 %Segmentation, clustering and decoding are performed with 12 MFCC+E, computed with a 10ms frame rate. 
 %

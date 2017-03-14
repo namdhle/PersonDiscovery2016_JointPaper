@@ -1,17 +1,20 @@
-\section{Multimodal improvements}
+\section{Multimodal fusion}
 \label{sec:multimodal}
 
-As names are propagated based on the outputs of face and speech processing modules independently in CBN and VBN, we employed a fusion strategy to aggregate the results. Meanwhile, it is more straightforward to combine 2 modalities as joint similarity in GBN.
+As names are propagated based on the outputs of face and speech processing modules independently in CBN and VBN systems, 
+we employed a fusion strategy to aggregate the results. 
+Meanwhile, it is more straightforward to combine 2 modalities as joint similarity in GBN.
 
-\mypartitle{Late fusion ranking.} Within each shot, $\{N^F_i, f(N^F_i)\}$ is the set of names returned by face naming and the corresponding talking scores and $\{N^A_i,  s(N^A_i)\}$  is the set of names returned by speaker naming.
+\mypartitle{Late fusion ranking.} 
+Within each shot, $\{N^F_i, f(N^F_i)\}$ is the set of names returned by face naming and the corresponding talking scores and $\{N^A_i,  s(N^A_i)\}$  is the set of names returned by speaker naming.
 %
 The final set is the union of ${N^F_i}$ and ${N^A_i}$. The names which the two methods agree on are ranked highest.
 %
 The same late fusion strategy is applied to both CBN and VBN but with different ranking strategies.
 %
-For the disjoint names, VBN ranks them based on the scores. Meanwhile, for CBN
-%
-names from talking face naming are ranked higher than speaker naming  because we found that face naming is more reliable in empirical experiments.
+For the disjoint names, VBN systems ranks them based on the scores. 
+Meanwhile, for CBN names from talking face naming are ranked higher than speaker naming 
+because we found that face naming is more reliable in empirical experiments.
 %
 %Alternative strategies that rank speaker naming equal or higher than face naming gave inferior results.
 %

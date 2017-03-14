@@ -7,11 +7,11 @@ First, contrastive experiments with various configurations are performed for eac
 
 \subsection{Contrastive Results}
 
-\mypartitle{Clustering-based naming.} Tab.~\ref{tab:clustering} shows the results using CBM with different settings. system based solely on speaker diarization (A), which is common for both LIMSI and EUMSSI, is far behind the baseline (29.9\% vs. 55.9\%) because speech turns are wrongly over-clustered due to dubbing and voice-over.
+\mypartitle{Clustering-based naming.} Tab.~\ref{tab:clustering} shows the results using CBM with different settings. The system based solely on speaker diarization (A), which is common for both LIMSI and EUMSSI, is far behind the baseline (29.9\% vs. 55.9\%) because speech turns are wrongly over-clustered due to dubbing and voice-over.
 %
 When comparing 2 face clustering methods, LIMSI (V) outperforms EUMSSI (V) at MAP@1 while being slightly behind in MAP@10. This can be explained by the more robust detector used in EUMSSI (V) which detects faces at multiple poses while LIMSI (V) only detects frontal faces which has higher precision.
 %
-This also explains why after applying talking face detection, EUMSSI (V-talking) has a significant increase while LIMSI (V-talking) only has a minor improvement (6.7\% vs. 0.3\%). People appearing in frontal faces often are those who talks as well.
+This also explains why after applying talking face detection, EUMSSI (V-talking) has a significant increase while LIMSI (V-talking) only has a minor improvement (6.7\% vs. 0.3\%). People appearing in frontal faces often are those who talk as well.
 %
 Finally when AV results are fused, we can observe a substantial improvement in both systems.
 
@@ -89,9 +89,9 @@ This shows the possible drawbacks of VBN. The verification models are trained us
 %
 Moreover, this approach is affected more by the quality of OCR-NER as false names can be spread to multiple shots. In the future, some early clustering can help to increase the size of training data while some text filtering can increase the precision of enrolment.
 %
-On the other hand, GBN requires a face track and a speech turn to be sufficiently overlapped before assigning a name, thus reducing the effect of false texts. Also the combination of AV similarities forces a face and a voice to have the same identity to be tagged, which implicitly performs talking face detection.
+On the other hand, GBN requires a face track and a speech turn to be sufficiently overlapped before assigning a name, thus reducing the effect of false texts. The combination of AV similarities also implicitly performs talking face detection, which achieves higher precision in tagging people appearing and speaking.
 %
-However, discriminative talking detection model still outperforms when applied in CBN systems. Therefore, using this taking face detector in GBN is an interesting future work. 
+However, discriminative talking detection model still outperforms when applied in CBN systems. Therefore, using this talking face detector in GBN is an interesting future work. 
 %
 VBN can be used to learn more discriminative similarity for GBN edges.
 %

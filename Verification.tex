@@ -41,7 +41,7 @@ is detected using the BIC algorithm for speaker segmentation and using standard 
 %
 On the video side, the LIMSI approach was used to detect and track faces, and the track which overlapped most with the OCR temporal 
 segment  $(t_{\mathrm{start}},t_{\mathrm{end}})$ was considered as enrollment data and associated to the voice.
-Faces were represented with normalized DCT features.
+Faces were represented with normalized DCT features~\cite{anjos2012bob}.
 
 Given the audio and video enrollment data, speech segments and face tracks were represented using  
 an i-vector \cite{dehak10} extracted for each modality using the Kaldi toolkit \cite{kaldi}.
